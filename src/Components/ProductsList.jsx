@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductScene from './ProductScene'
 import { Link } from 'react-router'
 
@@ -10,23 +10,34 @@ const models = [
   'golf_club.glb',
 ]
 
-function ProductsList({ products }) {
-  return (
-    <div className='container mx-auto flex flex-wrap justify-center h-screen'>
+function ProductsList() {
+  const [products, setProducts] = useState(null);
 
-      {models.map((model, index) => (
-        <div key={index}>
-          <ProductScene model={`/Models/${model}`} scale={0.1} height={"70%"} background={''} />
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
+      .then(response => response.json())
+      .then(data => setProducts(data))
+  }, [])
+
+  products && console.log(products)
+
+
+  return (
+    products ? (
+    <div className='container mx-auto flex flex-wrap justify-center h-screen'>
+      {products.map((product) => (
+        <div key={product.id}>
+          <ProductScene model={product.file3DModel} scale={0.1} height={"70%"} background={''} />
           <div className='bg-slate-200 hover:cursor-pointer mx-3'>
-            <Link to={"/product"}>
-              <h2 className='text-xl text-red-600 font-bold px-1'>Soccer ball</h2>
-              <p className='font-bold px-1'>19.99 $</p>
+            <Link to={`/products/${product.id}`}>
+              <h2 className='text-xl text-red-600 font-bold px-1'>{product.name}</h2>
+              <p className='font-bold px-1'>{product.price} $</p>
             </Link>
           </div>
         </div>
       ))}
-
-    </div>
+    </div>) : (
+      <h1>Loading...</h1>)
   )
 }
 

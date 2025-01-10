@@ -5,15 +5,22 @@ import './Styles/index.css'
 import App from './App.jsx'
 import ProductRoute from './ProductRoute.jsx';
 import Navbar from './components/Navbar.jsx';
+import SignUp from './SignUp.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/product" element={<ProductRoute />} />
+      <Routes >
+        <Route path="signup" element={<SignUp />} />
+
+        <Route element={<Navbar />} >
+          <Route index element={<App />} />
+          <Route path='products'>
+            <Route path=':id' element={<ProductRoute />} />
+          </Route>
+        </Route>
+
       </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode >
 )

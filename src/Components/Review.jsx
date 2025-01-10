@@ -2,7 +2,7 @@ import React from 'react'
 import { StarIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { StarIcon as StarIconOutlined } from '@heroicons/react/24/outline'
 
-function Review() {
+function Review({ review }) {
     return (
         <div>
             <div className='flex items-center'>
