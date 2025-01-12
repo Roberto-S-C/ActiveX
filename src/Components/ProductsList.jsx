@@ -19,9 +19,6 @@ function ProductsList() {
       .then(data => setProducts(data))
   }, [])
 
-  products && console.log(products)
-
-
   return (
     products ? (
     <div className='container mx-auto flex flex-wrap justify-center h-screen'>

@@ -1,16 +1,16 @@
 import React from 'react'
 import { MagnifyingGlassIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import logo from '../assets/logo.png'
-import { Outlet } from 'react-router'
+import { Link, Outlet } from 'react-router'
 
 function Navbar() {
     return (
         <div>
             <div className='relative text-white bg-red-600'>
                 <div className='absolute top-0 right-3'>
-                    <a className='font-bold text-sm' href='/'>Sign Up</a>
+                    <Link className='font-bold text-sm' to='/signup'>Sign Up</Link>
                     <span className='px-2'>|</span>
-                    <a className='font-bold text-sm' href='/'>Sign In</a>
+                    <Link className='font-bold text-sm' to='/signin'>Sign In</Link>
                 </div>
                 <div className='flex items-center pt-3'>
                     <a href='/' className='flex items-center justify-center p-1'>
