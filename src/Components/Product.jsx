@@ -35,9 +35,13 @@ function Product() {
                 <div className='w-3/4 rounded-lg'>
                     <h3 className='text-center text-2xl text-red-600 font-bold'>Reviews</h3>
                     {
-                    (product.reviews.length > 0) ? 
-                    product.reviews.map((review) => (<Review review={review} />))
-                    : <h1>No reviews available...</h1>
+                        (product.reviews.length > 0) ?
+                            <div className='mt-4'>
+                                {
+                                    product.reviews.map((review) => (<div key={review.id} className='mt-3'><Review review={review} /></div>))
+                                }
+                            </div>
+                            : <h1>No reviews available...</h1>
                     }
                 </div>
             </div>

@@ -57,11 +57,11 @@ function SignIn() {
                             {...register('password', {
                                 required: 'Password is required',
                                 minLength: {
-                                    value: 12,
-                                    message: 'Password must be at least 12 characters'
+                                    value: 8,
+                                    message: 'Password must be at least 8 characters'
                                 },
                                 pattern: {
-                                    value: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{12,}$/,
+                                    value: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
                                     message: 'Password must contain 1 uppercase letter, 1 number, and 1 special character'
                                 }
                             })}

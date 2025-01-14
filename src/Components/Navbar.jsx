@@ -28,9 +28,9 @@ function Navbar() {
                             <MagnifyingGlassIcon className='absolute top-1/2 left-2 -translate-y-1/2 size-6 text-red-600' />
                         </div>
                         <div className='flex justify-around w-1/2'>
-                            <a href='/'>
-                                <UserCircleIcon className='size-8' />
-                            </a>
+                            <Link to='/account'>
+                                <UserCircleIcon className='size-8 hover:text-slate-200' />
+                            </Link>
                             <a href='/'>
                                 <ShoppingBagIcon className='size-8' />
                             </a>

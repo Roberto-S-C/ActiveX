@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StarIcon, UserCircleIcon } from '@heroicons/react/20/solid'
 import { StarIcon as StarIconOutlined } from '@heroicons/react/24/outline'
 
 function Review({ review }) {
+    const [stars, setStars] = useState([1, 2, 3, 4, 5])
+
     return (
         <div>
             <div className='flex items-center'>
                 <UserCircleIcon className='w-6 h-6 text-red-600' />
-                <p>Manolo</p>
+                <p className='m-1'>{review.userName}</p>
+                <p>{review.createdAt}</p>
             </div>
             <div className='flex items-center'>
-                <StarIcon className='w-6 h-6 text-yellow-600' />
-                <StarIcon className='w-6 h-6 text-yellow-600' />
-                <StarIcon className='w-6 h-6 text-yellow-600' />
-                <StarIcon className='w-6 h-6 text-yellow-600' />
-                <StarIconOutlined className='w-6 h-6 text-yellow-600' />
+                <h4 className='font-bold text-red-600 mr-1'>{review.productName}</h4>
+                {
+                    stars.map((i) => {
+                        return i <= review.stars ? <StarIcon key={i} className='w-5 h-5 text-yellow-400' /> : <StarIconOutlined key={i} className='w-5 h-5 text-yellow-400' />
+                    })
+                }
             </div>
-            <p>November 13 2024</p>
-            <p>Great product, I love it!</p>
-            <p>I would recommend this to anyone!</p>
+            <p className='font-bold'>{review.title}</p>
+            <p>{review.content}</p>
         </div>
     )
 }

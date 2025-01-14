@@ -1,5 +1,4 @@
 import './Styles/App.css'
-import Navbar from './components/Navbar'
 import ProductsList from './Components/ProductsList'
 
 function App() {
