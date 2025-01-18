@@ -2,14 +2,6 @@ import React, { useEffect, useState } from 'react'
 import ProductScene from './ProductScene'
 import { Link } from 'react-router'
 
-const models = [
-  'soccer.glb',
-  'football.glb',
-  'basketball.glb',
-  'chess_board.glb',
-  'golf_club.glb',
-]
-
 function ProductsList() {
   const [products, setProducts] = useState(null);
 

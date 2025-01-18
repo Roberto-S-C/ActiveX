@@ -31,9 +31,9 @@ function Navbar() {
                             <Link to='/account'>
                                 <UserCircleIcon className='size-8 hover:text-slate-200' />
                             </Link>
-                            <a href='/'>
+                            <Link to='/shoppingbag'>
                                 <ShoppingBagIcon className='size-8' />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

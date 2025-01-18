@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router'
 import Review from './Components/Review'
+import Header from './Components/Header'
 
 function Account() {
   const [userInfo, setUserInfo] = useState(null)
@@ -44,12 +45,7 @@ function Account() {
 
   return (
     <div>
-      <div className='flex justify-center items-center relative bg-red-600'>
-        <button onClick={() => navigate('/')} className='absolute left-0'>
-          <ChevronLeftIcon className='h-8 w-8 text-white font-bold hover:text-slate-200' />
-        </button>
-        <h1 className='text-white text-2xl font-bold p-3'>Account</h1>
-      </div>
+      <Header title='Account' /> 
       {userInfo &&
         <div className='flex flex-wrap container mx-auto'>
           <div className='w-1/4'>
@@ -65,7 +61,7 @@ function Account() {
 
         </div>}
 
-      <div className='container mx-auto'>
+      <div className='mx-auto w-11/12'>
         <h3 className='text-red-600 font-bold text-2xl'>Reviews</h3>
         <hr className='mt-2' />
         {reviews ?

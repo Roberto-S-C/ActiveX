@@ -8,14 +8,16 @@ import ProductRoute from './ProductRoute.jsx'
 import SignUp from './SignUp.jsx';
 import SignIn from './SignIn.jsx';
 import Account from './Account.jsx';
+import ShoppingBag from './ShoppingBag.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <Routes >
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
-        <Route path="account" element={<Account/>} />
+        <Route path="account" element={<Account />} />
+        <Route path="shoppingbag" element={<ShoppingBag />} />
 
         <Route element={<Navbar />} >
           <Route index element={<App />} />
@@ -27,5 +29,5 @@ createRoot(document.getElementById('root')).render(
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </BrowserRouter>
-  </StrictMode >
+  // </StrictMode >
 )
