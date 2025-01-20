@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import ProductScene from './ProductScene'
 import { Link } from 'react-router'
+import { ProductListContext } from '../main';
 
 function ProductsList() {
-  const [products, setProducts] = useState(null);
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
-      .then(response => response.json())
-      .then(data => setProducts(data))
-  }, [])
+  const { productList, setProductList } = useContext(ProductListContext);
 
   return (
-    products ? (
+    productList ? (
     <div className='container mx-auto flex flex-wrap justify-center h-screen'>
-      {products.map((product) => (
+      {productList.map((product) => (
         <div key={product.id}>
           <ProductScene model={product.file3DModel} scale={0.1} height={"70%"} background={''} />
           <div className='bg-slate-200 hover:cursor-pointer mx-3'>
