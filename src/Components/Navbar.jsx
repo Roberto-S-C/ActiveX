@@ -8,6 +8,7 @@ import { ProductListContext } from '../main'
 function Navbar() {
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(0)
+    const [search, setSearch] = useState('')
 
     const { productList, setProductList } = useContext(ProductListContext);
 
@@ -24,10 +25,20 @@ function Navbar() {
 
     const selectCategory = async (category) => {
         setSelectedCategory(category.value)
-        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?category=${category.value}`)
+        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
         let data = await response.json()
         setProductList(data)
         navigate('/')
+    }
+
+    const searchProduct = async (event) => {
+        let name = event.target.value
+        setSearch(name)
+        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${name}&category=${selectedCategory}`)
+        let data = await response.json()
+        setProductList(data)
+        navigate('/')
+        return console.log(data)
     }
 
     useEffect(() => {
@@ -71,7 +82,7 @@ function Navbar() {
                             />}
 
                         <div className='relative w-1/2 mx-3'>
-                            <input type='text' placeholder='Search' className='w-full pl-9 py-1 rounded-md text-black text-xl' />
+                            <input type='text' onChange={searchProduct} placeholder='Search' className='w-full pl-9 py-1 rounded-md text-black text-xl' />
                             <MagnifyingGlassIcon className='absolute top-1/2 left-1 -translate-y-1/2 size-6 text-red-600' />
                         </div>
                     </div>

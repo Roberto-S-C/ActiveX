@@ -2,13 +2,14 @@ import React, { useEffect, useState, useContext } from 'react'
 import ProductScene from './ProductScene'
 import { Link } from 'react-router'
 import { ProductListContext } from '../main';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 
 function ProductsList() {
 
   const { productList, setProductList } = useContext(ProductListContext);
 
   return (
-    productList ? (
+    productList.length > 0 ? (
     <div className='container mx-auto flex flex-wrap justify-center h-screen'>
       {productList.map((product) => (
         <div key={product.id}>
@@ -22,7 +23,11 @@ function ProductsList() {
         </div>
       ))}
     </div>) : (
-      <h1>Loading...</h1>)
+      <div className='flex flex-col items-center justify-center h-screen'>
+        <ExclamationTriangleIcon className='size-20 text-red-600' />
+        <h3 className='my-3 text-center text-4xl text-slate-400'>Product not found...</h3>
+      </div>
+    )
   )
 }
 
