@@ -9,6 +9,7 @@ import SignUp from './SignUp.jsx';
 import SignIn from './SignIn.jsx';
 import Account from './Account.jsx';
 import ShoppingBag from './ShoppingBag.jsx'
+import AddProduct from './AddProduct.jsx'
 
 export const ProductListContext = createContext();
 
@@ -33,6 +34,7 @@ function Main() {
             <Route index element={<App />} />
             <Route path='products'>
               <Route path=':id' element={<ProductRoute />} />
+              <Route path='add' element={<AddProduct />} />
             </Route>
           </Route>
           <Route path="*" element={<h1>404 Not Found</h1>} />
