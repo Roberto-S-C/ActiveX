@@ -1,28 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Categories from './Categories'
 import SearchBar from './SearchBar'
+import { ProductListContext } from '../main'
+import { useNavigate } from 'react-router'
+import getCategories from '../scripts/getCategories'
 
 function Filtering() {
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(0)
 
     const [search, setSearch] = useState('')
+    const { productList, setProductList } = useContext(ProductListContext);
 
-    const getCategories = async () => {
-        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`)
+    const navigate = useNavigate()
+
+    const selectCategory = async (category) => {
+        setSelectedCategory(category.value)
+        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
         let data = await response.json()
-        data.unshift({ id: 0, name: 'Categories' })
-        return data.map(category => {
-            return { value: category.id, label: <span className='text-red-600 font-bold'>{category.name}</span> }
-        })
+        setProductList(data)
+        navigate('/')
     }
 
     useEffect(() => { getCategories().then(categories => setCategories(categories)) }, [])
 
     return (
-        <div className='flex justify-center items-center w-full'>
-            {categories.length > 0 && <Categories categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} search={search} />}
-            {categories.length > 0 && <SearchBar selectedCategory={selectedCategory} setSearch={setSearch} />}
+        <div className='flex justify-center items-center w-2/3'>
+            <div className='w-1/3 mx-2'>
+                {categories.length > 0 && <Categories categories={categories} selectCategory={selectCategory} selectedCategory={selectedCategory} />}
+            </div>
+            <div className='w-2/3 mx-2'>
+                {categories.length > 0 && <SearchBar selectedCategory={selectedCategory} setSearch={setSearch} />}
+            </div>
         </div>
     )
 }

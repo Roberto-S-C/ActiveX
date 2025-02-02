@@ -19,7 +19,7 @@ function SearchBar({ selectedCategory, setSearch }) {
     }
 
     return (
-        <div className='relative w-1/2 mx-3'>
+        <div className='relative w-full'>
             <input type='text' onChange={searchProduct} placeholder='Search' className='w-full pl-9 py-1 rounded-md text-black text-xl' />
             <MagnifyingGlassIcon className='absolute top-1/2 left-1 -translate-y-1/2 size-6 text-red-600' />
         </div>

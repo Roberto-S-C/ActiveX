@@ -30,11 +30,11 @@ function Main() {
           <Route path="signin" element={<SignIn />} />
           <Route path="account" element={<Account />} />
           <Route path="shoppingbag" element={<ShoppingBag />} />
+          <Route path='addProduct' element={<AddProduct />} />
           <Route element={<Navbar />} >
             <Route index element={<App />} />
             <Route path='products'>
               <Route path=':id' element={<ProductRoute />} />
-              <Route path='add' element={<AddProduct />} />
             </Route>
           </Route>
           <Route path="*" element={<h1>404 Not Found</h1>} />

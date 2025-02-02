@@ -1,25 +1,21 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
-import { ProductListContext } from '../main'
-import { useNavigate } from 'react-router'
 
-function Categories({ categories, selectedCategory, setSelectedCategory, search }) {
+function Categories({ categories, selectCategory, selectedCategory }) {
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
 
-    const { productList, setProductList } = useContext(ProductListContext);
-
-    const navigate = useNavigate()
-
-    const selectCategory = async (category) => {
-        setSelectedCategory(category.value)
-        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
-        let data = await response.json()
-        setProductList(data)
-        navigate('/')
-    }
+    useEffect(() => {
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].value === selectedCategory) {
+                setSelectedCategoryIndex(i)
+                break
+            }
+        }
+    }, [selectedCategory])
 
     return (
         <Select
-            value={categories[selectedCategory]}
+            value={categories[selectedCategoryIndex]}
             options={categories}
             onChange={selectCategory}
             styles={{
