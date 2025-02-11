@@ -1,4 +1,4 @@
-function createProductRequest(data, model, selectedCategory, setShowAlert, setAlertDetails, token) {
+function createProductRequest(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate) {
 
     if (!model) {
         setAlertDetails({ status: 'error', message: 'Select a file', duration: 3000 })
@@ -14,7 +14,7 @@ function createProductRequest(data, model, selectedCategory, setShowAlert, setAl
     const formData = new FormData()
     formData.append('name', data.name)
     formData.append('description', data.description)
-    formData.append('price', data.price)
+    formData.append('price', price)
     formData.append('file3DModel', model, model.name)
     formData.append('categoryId', selectedCategory)
 
@@ -27,9 +27,7 @@ function createProductRequest(data, model, selectedCategory, setShowAlert, setAl
             body: formData
         })
             .then((response) => response.json())
-            .then(r => {
-                console.log(r)
-            })
+            .then(data => navigate(`/products/${data.id}`))
             .catch(e => console.log(e))
     } catch (error) {
         console.error(error);

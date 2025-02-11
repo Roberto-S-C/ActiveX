@@ -11,6 +11,8 @@ import createProductRequest from './scripts/AddProduct/createProductRequest'
 import Alert from './Components/Alert'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router'
+import ProductScene from './Components/ProductScene'
+import { TrashIcon } from '@heroicons/react/24/solid'
 
 function AddProduct() {
   const [categories, setCategories] = useState([])
@@ -64,21 +66,42 @@ function AddProduct() {
         </div>
       }
 
-      <form onSubmit={handleSubmit((data) => createProductRequest(data, model, selectedCategory, setShowAlert, setAlertDetails, token))} className='flex items-center h-screen z-0'>
+      <form onSubmit={handleSubmit((data) => createProductRequest(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate))} className='flex items-center h-screen z-0'>
 
-        <div className='w-1/2'>
-          <label className='flex flex-col items-center mb-2 text-2xl font-bold text-slate-400 hover:cursor-pointer hover:text-slate-600' htmlFor='model'>
-            <CloudArrowUpIcon className='size-40 mb-4 text-red-600' />
-            <span>Upload 3D Model</span>
-          </label>
-          <input
-            type='file'
-            accept='.glb'
-            id='model'
-            name='model'
-            onChange={(e) => validateFile({ model: e.target.files, setModel, setValidModel, setShowAlert, setAlertDetails })}
-            className='hidden'
-          />
+        <div className='flex justify-center items-center w-1/2 h-full'>
+          {!validModel &&
+            <div>
+              <label className='flex flex-col items-center mb-2 text-2xl font-bold text-slate-400 hover:cursor-pointer hover:text-slate-600' htmlFor='model'>
+                <CloudArrowUpIcon className='size-40 mb-4 text-red-600' />
+                <span>Upload 3D Model</span>
+              </label>
+              <input
+                type='file'
+                accept='.glb'
+                id='model'
+                name='model'
+                onChange={(e) => validateFile({ model: e.target.files, setModel, setValidModel, setShowAlert, setAlertDetails })}
+                className='hidden'
+              />
+            </div>
+          }
+
+          {validModel &&
+            <div className='flex flex-col justify-center items-center h-full w-full'>
+              <ProductScene model={model} scale={0.1} height={"80%"} background={'white'} remote={false} />
+              <div 
+                onClick={() => {
+                  setModel('')
+                  setValidModel(false)
+                }}
+                className='flex justify-center items-center w-1/2 p-4 rounded-md bg-red-600 hover:bg-red-700 hover:cursor-pointer'
+              >
+                <span className='text-xl font-bold text-white'>Remove</span>
+                <TrashIcon className='size-8 text-white' />
+              </div>
+            </div>
+          }
+
         </div>
 
         <div className='flex flex-col items-center justify-around w-1/2 h-full'>

@@ -45,7 +45,7 @@ function Product() {
         product ? (<div className='lg:flex lg:h-screen'>
             <ToastContainer />
             <div className='lg:w-1/2 h-screen'>
-                <ProductScene model={product.file3DModel} scale={0.1} height={"100%"} background={"white"} />
+                <ProductScene model={product.file3DModel} scale={0.1} height={"100%"} background={"white"} remote={true} />
             </div>
             <div className='lg:w-1/2 flex flex-col mt-5'>
                 <h1 className='text-4xl font-bold'>{product.name}</h1>

@@ -64,7 +64,7 @@ function ShoppingBag() {
                             {products.map(product => (
                                 <div key={product.id} className='flex h-1/3 my-2'>
                                     <div className='w-3/4 h-full'>
-                                        <ProductScene model={product.file3DModel} scale={1.0} height={"100%"} background={''} />
+                                        <ProductScene model={product.file3DModel} scale={1.0} height={"100%"} background={''} remote={true} />
                                     </div>
                                     <div className='flex flex-col justify-evenly relative w-1/4 bg-slate-200 hover:cursor-pointer'>
                                         <Link to={`/products/${product.id}`}>
