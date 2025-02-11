@@ -2,14 +2,16 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import ProductScene from './ProductScene'
-import { ToastContainer, toast } from 'react-custom-alert'
+import Alert from './Alert.jsx'
 
 import Review from './Review'
 import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 
 function Product() {
-    const [product, setProduct] = useState(null);
-    let { id } = useParams();
+    const [product, setProduct] = useState(null)
+    let { id } = useParams()
+
+    const [showAlert, setShowAlert] = useState(false)
 
     const addToBag = () => {
         let bag = localStorage.getItem('bag')
@@ -32,7 +34,7 @@ function Product() {
             bag = [{ id, quantity: 1 }]
             localStorage.setItem('bag', JSON.stringify(bag))
         }
-        toast.success('Product added to bag')
+        setShowAlert(true)
     }
 
     useEffect(() => {
@@ -43,7 +45,11 @@ function Product() {
 
     return (
         product ? (<div className='lg:flex lg:h-screen'>
-            <ToastContainer />
+            {showAlert && <Alert
+                alertDetails={{ status: 'success', message: 'Product added to bag', duration: 2000 }}
+                showAlert={showAlert}
+                setShowAlert={setShowAlert}
+            />}
             <div className='lg:w-1/2 h-screen'>
                 <ProductScene model={product.file3DModel} scale={0.1} height={"100%"} background={"white"} remote={true} />
             </div>

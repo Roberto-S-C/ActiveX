@@ -6,9 +6,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Link, useNavigate } from 'react-router'
 import { useCookies } from 'react-cookie'
 import signIn from './scripts/signIn'
-import { ToastContainer, toast } from 'react-custom-alert'
-import 'react-custom-alert/dist/index.css';
-
+import Alert from './Components/Alert'
 
 function SignUp() {
   const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: { username: '', email: '', password: '' } })
@@ -17,6 +15,9 @@ function SignUp() {
   const [inputType, setInputType] = useState('password')
 
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertDetails, setAlertDetails] = useState({})
 
   let navigate = useNavigate()
   const onSubmit = async (data) => {
@@ -33,12 +34,21 @@ function SignUp() {
       navigate('/')
       return
     }
-    if (response.status === 400) toast.error('Username or email already exists')
+    if (response.status === 400) {
+      setAlertDetails({ status: 'error', message: 'Username or email already exists', duration: 2000 })
+      setShowAlert(true)
+    }
   }
 
   return (
     <div className='flex flex-col justify-center items-center container mx-auto h-screen'>
-      <ToastContainer />
+
+      {showAlert && <Alert
+        alertDetails={alertDetails}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      />}
+
       <div className='flex flex-col items-center w-1/3 h-3/4 p-4 rounded-lg bg-slate-200'>
         <div className='flex flex-col justify-center items-center w-full h-1/3'>
           <img src={logo} className='w-1/6' />
