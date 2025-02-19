@@ -19,7 +19,7 @@ function Filtering() {
         let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
         let data = await response.json()
         setProductList(data)
-        navigate('/')
+        navigate('/products')
     }
 
     useEffect(() => { getCategories().then(categories => setCategories(categories)) }, [])

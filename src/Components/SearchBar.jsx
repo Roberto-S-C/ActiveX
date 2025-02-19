@@ -15,7 +15,7 @@ function SearchBar({ selectedCategory, setSearch }) {
         let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${name}&category=${selectedCategory}`)
         let data = await response.json()
         setProductList(data)
-        navigate('/')
+        navigate('/products')
     }
 
     return (

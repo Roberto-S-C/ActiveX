@@ -31,7 +31,7 @@ function SignIn() {
         if (response.status === 200) {
             let token = await signIn(data)
             setCookie('token', token)
-            navigate('/')
+            navigate('/products')
             return
         }
         if (response.status === 400) {
