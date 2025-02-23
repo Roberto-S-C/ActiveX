@@ -1,7 +1,7 @@
 import { CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import React, { useEffect } from 'react'
 
-function Alert({ alertDetails, setShowAlert }) {
+function Alert({ alertDetails, setShowAlert, positionY = 5 }) {
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -11,7 +11,9 @@ function Alert({ alertDetails, setShowAlert }) {
     }, [])
 
     return (
-        <div className='flex justify-center absolute top-5 w-full z-20'>
+        <div 
+            className='flex justify-center absolute w-full z-20'
+            style={{top: positionY}}>
             {alertDetails.status === 'success' && (
                 <div className='flex justify-center items-center w-1/3 gap-2 p-2 rounded-lg border bg-green-100'>
                     <CheckCircleIcon className='size-8 text-green-600' />
