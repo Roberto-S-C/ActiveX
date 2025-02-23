@@ -1,4 +1,5 @@
-function updateProductRequest(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, productId, remote) {
+function updateProductRequest(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, product, remote) {
+    console.log(data)
 
     if (!model) {
         setAlertDetails({ status: 'error', message: 'Select a file', duration: 3000 })
@@ -22,14 +23,14 @@ function updateProductRequest(data, model, selectedCategory, price, setShowAlert
     }
 
     try {
-        fetch(`${import.meta.env.VITE_API_URL}/api/products/${productId}`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/products/${product.id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`
             },
             body: formData
         })
-            .then(() => navigate(`/products/${productId}`))
+            .then(() => navigate(`/products/${product.id}`))
             .catch(e => console.log(e))
     } catch (error) {
         console.error(error);

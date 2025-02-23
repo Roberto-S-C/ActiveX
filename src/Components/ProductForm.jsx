@@ -48,9 +48,7 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
 
     return (
         <form
-            onSubmit={
-                handleSubmit((data) => onSubmit(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, product.id, remote))
-            }
+            onSubmit={handleSubmit((data) => onSubmit(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, product, remote))}
             className='flex items-center h-screen z-0'>
 
             <div className='flex justify-center items-center w-1/2 h-full'>

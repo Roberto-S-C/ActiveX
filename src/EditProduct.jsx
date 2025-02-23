@@ -5,6 +5,8 @@ import { useCookies } from 'react-cookie'
 import getProduct from './scripts/getProduct'
 import ProductForm from './Components/ProductForm'
 import updateProductRequest from './scripts/UpdateProduct/updateProductRequest'
+import Alert from './Components/Alert'
+import AddCategory from './Components/AddCategory'
 
 function EditProduct() {
   const params = useParams()
