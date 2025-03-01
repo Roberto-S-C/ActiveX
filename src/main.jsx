@@ -11,6 +11,7 @@ import Account from './Account.jsx';
 import ShoppingBag from './ShoppingBag.jsx'
 import AddProduct from './AddProduct.jsx'
 import EditProduct from './EditProduct.jsx'
+import getProducts from './scripts/getProducts.js'
 
 export const ProductListContext = createContext();
 
@@ -18,8 +19,7 @@ function Main() {
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/products`)
-      .then(response => response.json())
+    getProducts()
       .then(data => setProductList(data))
   }, [])
 
