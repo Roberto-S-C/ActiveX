@@ -3,16 +3,29 @@ import { ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import logo from '../assets/logo.png'
 import { Link, Outlet } from 'react-router'
 import Filtering from './Filtering'
+import { useCookies } from 'react-cookie'
 
 function Navbar() {
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+    useEffect(() => {
+        if (cookies.token) {
+            setIsAuthenticated(true)
+        }
+    }, [])
+
+
     return (
         <div>
             <div className='relative text-white bg-red-600 px-2 py-5'>
-                <div className='absolute top-0 right-3'>
-                    <Link className='font-bold text-sm' to='/signup'>Sign Up</Link>
-                    <span className='font-bold text-sm mx-2'>|</span>
-                    <Link className='font-bold text-sm' to='/signin'>Sign In</Link>
-                </div>
+                {!isAuthenticated &&
+                    <div className='absolute top-0 right-3'>
+                        <Link className='font-bold text-sm' to='/signup'>Sign Up</Link>
+                        <span className='font-bold text-sm mx-2'>|</span>
+                        <Link className='font-bold text-sm' to='/signin'>Sign In</Link>
+                    </div>
+                }
 
                 <div className='flex items-center'>
                     <div className='flex justify-start w-1/6'>
