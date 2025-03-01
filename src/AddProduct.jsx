@@ -5,6 +5,7 @@ import Alert from './Components/Alert'
 import createProductRequest from './scripts/AddProduct/createProductRequest'
 import { useCookies } from 'react-cookie'
 import ProductForm from './Components/ProductForm'
+import { useNavigate } from 'react-router'
 
 function AddProduct() {
   const [showCategoryModal, setShowCategoryModal] = useState(false)
@@ -14,6 +15,8 @@ function AddProduct() {
 
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const [token, setToken] = useState(null)
+   
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!cookies.token) {
