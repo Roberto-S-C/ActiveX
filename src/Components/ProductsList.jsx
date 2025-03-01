@@ -13,7 +13,7 @@ function ProductsList() {
     <div className='container mx-auto flex flex-wrap justify-center'>
       {productList.map((product) => (
         <div key={product.id} className='mx-2 my-2'>
-          <ProductScene model={product.file3DModel} scale={0.1} height={"85%"} background={''} remote={true} />
+          <ProductScene model={product.file3DModel} scale={2.0} height={"85%"} background={''} remote={true} />
           <div className='bg-slate-200 hover:cursor-pointer'>
             <Link to={`/products/${product.id}`}>
               <h2 className='text-xl text-red-600 font-bold px-1'>{product.name}</h2>

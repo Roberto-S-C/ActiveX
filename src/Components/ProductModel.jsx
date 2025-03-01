@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Box3, Vector3 } from 'three'
 
 function ProductModel({ model, scale, remote }) {
-    const [normalizedScale, setNormalizedScale] = useState(scale);
+    const [normalizedScale, setNormalizedScale] = useState([scale, scale, scale]);
     const [fileUrl, setFileUrl] = useState(null);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function ProductModel({ model, scale, remote }) {
             box.getSize(size);
             const maxDimension = Math.max(size.x, size.y, size.z);
             const normalizationScale = scale / maxDimension;
-            setNormalizedScale(normalizationScale);
+            setNormalizedScale([normalizationScale * scale, normalizationScale * scale, normalizationScale * scale]);
         }
     }, [glb, scale]);
 

@@ -11,7 +11,7 @@ function ProductManagement({ product, setShowDeleteConfirmation, setDeleteProduc
             <div>
                 <ProductScene
                     model={product.file3DModel}
-                    scale={1.0}
+                    scale={2.0}
                     height={300}
                     remote={true}
                 />
