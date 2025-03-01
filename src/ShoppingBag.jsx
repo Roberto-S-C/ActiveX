@@ -3,15 +3,11 @@ import Header from './Components/Header'
 import ProductScene from './Components/ProductScene'
 import { Link } from 'react-router'
 import { MinusCircleIcon, PlusCircleIcon, ShoppingBagIcon, TrashIcon } from '@heroicons/react/24/solid'
+import getProduct from './scripts/getProduct'
 
 function ShoppingBag() {
     const [products, setProducts] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
-
-    const getProduct = async (productId) => {
-        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${productId}`)
-        return await response.json()
-    }
 
     const calculateTotalPrice = () => {
         let total = 0
@@ -42,10 +38,16 @@ function ShoppingBag() {
             bag = JSON.parse(bag)
             if (products.length === 0) {
                 bag.forEach(item => {
-                    getProduct(item.id).then(product => {
-                        product.quantity = item.quantity
-                        setProducts(prevProducts => [...prevProducts, product])
-                    })
+                    getProduct(item.id)
+                        .then(product => {
+                            product.quantity = item.quantity
+                            setProducts(prevProducts => [...prevProducts, product])
+                        })
+                        .catch(() => {
+                            let newBag = bag.filter(bagItem => bagItem.id != item.id)
+                            localStorage.setItem('bag', JSON.stringify(newBag))
+                            setProducts(prevProducts => prevProducts.filter(product => product.id !== item.id))
+                        })
                 });
             }
         }
@@ -64,7 +66,7 @@ function ShoppingBag() {
                             {products.map(product => (
                                 <div key={product.id} className='flex h-1/3 my-2'>
                                     <div className='w-3/4 h-full'>
-                                        <ProductScene model={product.file3DModel} scale={1.0} height={"100%"} background={''} remote={true} />
+                                        <ProductScene model={product.file3DModel} scale={2.2} height={"100%"} background={''} remote={true} />
                                     </div>
                                     <div className='flex flex-col justify-evenly relative w-1/4 bg-slate-200 hover:cursor-pointer'>
                                         <Link to={`/products/${product.id}`}>
