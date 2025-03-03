@@ -5,7 +5,7 @@ import deleteProduct from '../scripts/deleteProduct'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router'
 
-function Confirmation({ deleteProductId, products, setProducts, setShowDeleteConfirmation, setAlertDetails, setShowAlert, scrollY }) {
+function DeleteProductConfirmation({ deleteProductId, products, setProducts, setShowDeleteProductConfirmation, setAlertDetails, setShowAlert, scrollY }) {
 
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ function Confirmation({ deleteProductId, products, setProducts, setShowDeleteCon
           style={{ top: scrollY, left: '50%', translate: ('0', '-50%') }}
         >
           <div className='relative flex flex-col justify-center items-center p-4 gap-3 rounded-lg bg-white'>
-            <div className='absolute top-0 right-0 p-1 cursor-pointer' onClick={() => setShowDeleteConfirmation(false)}>
+            <div className='absolute top-0 right-0 p-1 cursor-pointer' onClick={() => setShowDeleteProductConfirmation(false)}>
               <XMarkIcon className='size-5 text-red-600' />
             </div>
 
@@ -48,4 +48,4 @@ function Confirmation({ deleteProductId, products, setProducts, setShowDeleteCon
   )
 }
 
-export default Confirmation
+export default DeleteProductConfirmation

@@ -3,7 +3,7 @@ import React from 'react'
 import ProductScene from './ProductScene'
 import { Link, useNavigate } from 'react-router'
 
-function ProductManagement({ product, setShowDeleteConfirmation, setDeleteProductId, setScrollY }) {    
+function ProductManagement({ product, setShowDeleteProductConfirmation, setDeleteProductId, setScrollY }) {    
     const navigate = useNavigate()
 
     return (
@@ -27,7 +27,7 @@ function ProductManagement({ product, setShowDeleteConfirmation, setDeleteProduc
                     </div>
                     <div onClick={() => {
                         setDeleteProductId(product.id)
-                        setShowDeleteConfirmation(true)
+                        setShowDeleteProductConfirmation(true)
                         setScrollY(window.scrollY)
                         
                     }}>

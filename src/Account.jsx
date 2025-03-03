@@ -8,18 +8,25 @@ import getUserReviews from './scripts/User/getUserReviews'
 import getUserProducts from './scripts/User/getUserProducts'
 import AccountTab from './Components/AccountTab'
 import ProductManagement from './Components/ProductManagement'
-import DeleteConfirmation from './Components/DeleteConfirmation'
+import DeleteProductConfirmation from './Components/DeleteProductConfirmation'
+import DeleteReviewConfirmation from './Components/DeleteReviewConfirmation'
 import Alert from './Components/Alert'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
   const [products, setProducts] = useState(null)
+
   const [selectedView, setSelectedView] = useState('Products')
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+
+  const [showDeleteProductConfirmation, setShowDeleteProductConfirmation] = useState(false)
+  const [showDeleteReviewConfirmation, setShowDeleteReviewConfirmation] = useState(false)
+
   const [alertDetails, setAlertDetails] = useState(null)
   const [showAlert, setShowAlert] = useState(false)
 
   const [deleteProductId, setDeleteProductId] = useState(null)
+  const [deleteReviewId, setDeleteReviewId] = useState(null)
 
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
 
@@ -54,12 +61,24 @@ function Account() {
 
       <div className='relative flex flex-col items-center'>
         <UserInfo />
-        {showDeleteConfirmation &&
-          <DeleteConfirmation
+        {showDeleteProductConfirmation &&
+          <DeleteProductConfirmation
             deleteProductId={deleteProductId}
             products={products}
             setProducts={setProducts}
-            setShowDeleteConfirmation={setShowDeleteConfirmation}
+            setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
+            setAlertDetails={setAlertDetails}
+            setShowAlert={setShowAlert}
+            scrollY={scrollY}
+          />
+        }
+
+        {showDeleteReviewConfirmation &&
+          <DeleteReviewConfirmation
+            deleteReviewId={deleteReviewId}
+            reviews={reviews}
+            setReviews={setReviews}
+            setShowDeleteReviewConfirmation={setShowDeleteReviewConfirmation}
             setAlertDetails={setAlertDetails}
             setShowAlert={setShowAlert}
             scrollY={scrollY}
@@ -82,7 +101,7 @@ function Account() {
                       key={product.id}
                       product={product}
                       setDeleteProductId={setDeleteProductId}
-                      setShowDeleteConfirmation={setShowDeleteConfirmation}
+                      setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
                       setScrollY={setScrollY}
                     />)}
                   </div>
@@ -96,11 +115,27 @@ function Account() {
           }
 
           {selectedView === 'Reviews' &&
-            <div>
+            <div className='mb-3'>
               {reviews
                 ? (
-                  <div>
-                    {reviews.map(review => <Review key={review.id} review={review} />)}
+                  <div className='grid grid-cols-3 gap-4 mt-4'>
+                    {reviews.map(review =>
+                      <div key={review.id} className='flex flex-col justify-between flex-1 border rounded-md p-2'>
+                        <Review review={review} />
+                        <div className='flex justify-around mt-2'>
+                          <button onClick={() => { }}>
+                            <PencilSquareIcon className='w-6 h-6 text-slate-300 hover:text-red-600 hover:cursor-pointer' />
+                          </button>
+                          <button onClick={() => {
+                            setShowDeleteReviewConfirmation(true)
+                            setDeleteReviewId(review.id)
+                            setScrollY(window.scrollY)
+                          }}>
+                            <TrashIcon className='w-6 h-6 text-slate-300 hover:text-red-600 hover:cursor-pointer' />
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )
                 : (
