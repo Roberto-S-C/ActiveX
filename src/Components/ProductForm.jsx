@@ -7,7 +7,7 @@ import Categories from './Categories'
 import ProductScene from './ProductScene'
 import changePrice from '../scripts/Product/changePrice'
 import validateFile from '../scripts/Product/validateFile'
-import getCategories from '../scripts/getCategories'
+import getCategories from '../scripts/Category/getCategories'
 
 function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setShowAlert, setAlertDetails, token, product, remote, setRemote }) {
     const {

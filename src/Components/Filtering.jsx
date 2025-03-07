@@ -3,7 +3,7 @@ import Categories from './Categories'
 import SearchBar from './SearchBar'
 import { ProductListContext } from '../main'
 import { useNavigate } from 'react-router'
-import getCategories from '../scripts/getCategories'
+import getCategories from '../scripts/Category/getCategories'
 
 function Filtering() {
     const [categories, setCategories] = useState([])
