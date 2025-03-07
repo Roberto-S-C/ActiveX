@@ -1,7 +1,7 @@
 import { ChevronLeftIcon } from '@heroicons/react/24/solid'
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router'
-import getProducts from '../scripts/getProducts'
+import getProducts from '../scripts/Product/getProducts'
 import { ProductListContext } from '../main'
 
 function Header({ title }) {

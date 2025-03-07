@@ -5,7 +5,7 @@ import logo from './assets/logo.png'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Link, useNavigate } from 'react-router'
 import { useCookies } from 'react-cookie'
-import signIn from './scripts/signIn'
+import signIn from './scripts/User/signIn'
 import Alert from './Components/Alert'
 
 function SignUp() {

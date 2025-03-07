@@ -5,8 +5,8 @@ import { CloudArrowUpIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outli
 import { TrashIcon } from '@heroicons/react/24/solid'
 import Categories from './Categories'
 import ProductScene from './ProductScene'
-import changePrice from '../scripts/AddProduct/changePrice'
-import validateFile from '../scripts/AddProduct/validateFile'
+import changePrice from '../scripts/Product/changePrice'
+import validateFile from '../scripts/Product/validateFile'
 import getCategories from '../scripts/getCategories'
 
 function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setShowAlert, setAlertDetails, token, product, remote, setRemote }) {

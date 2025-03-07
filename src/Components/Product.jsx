@@ -4,8 +4,8 @@ import ProductScene from './ProductScene'
 import Alert from './Alert.jsx'
 import Review from './Review'
 import { ShoppingBagIcon } from '@heroicons/react/20/solid'
-import getProduct from '../scripts/getProduct.js'
-import AddReview from './AddReview.jsx'
+import getProduct from '../scripts/Product/getProduct.js'
+import ReviewForm from './ReviewForm.jsx'
 
 function Product() {
     const [product, setProduct] = useState(null)
@@ -13,7 +13,7 @@ function Product() {
 
     const [showAlert, setShowAlert] = useState(false)
     const [alertDetails, setAlertDetails] = useState({ status: '', message: '', duration: 0 })
-    const [showAddReview, setShowAddReview] = useState(false)
+    const [showReviewForm, setShowReviewForm] = useState(false)
 
     const addToBag = () => {
         let bag = localStorage.getItem('bag')
@@ -48,9 +48,9 @@ function Product() {
 
     return (
         <div className='relative'>
-            {showAddReview && 
-                <AddReview 
-                    setShowAddReview={setShowAddReview} 
+            {showReviewForm && 
+                <ReviewForm 
+                    setShowReviewForm={setShowReviewForm} 
                     productId={id} 
                     setAlertDetails={setAlertDetails} 
                     setShowAlert={setShowAlert} 
@@ -86,7 +86,7 @@ function Product() {
             {product && <div className='container mx-auto mb-3 z-0'>
                 <h3 className='w-full text-3xl text-red-600 font-bold'>Reviews</h3>
                 <button
-                    onClick={() => setShowAddReview(true)}
+                    onClick={() => setShowReviewForm(true)}
                     className='flex items-center p-1 mt-3 border-2 rounded-md border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700 text-slate-400 hover:text-white'>
                     <h3 className='font-bold'>Add Review</h3>
                 </button>

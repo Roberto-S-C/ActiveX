@@ -3,7 +3,7 @@ import Header from './Components/Header'
 import ProductScene from './Components/ProductScene'
 import { Link } from 'react-router'
 import { MinusCircleIcon, PlusCircleIcon, ShoppingBagIcon, TrashIcon } from '@heroicons/react/24/solid'
-import getProduct from './scripts/getProduct'
+import getProduct from './scripts/Product/getProduct'
 
 function ShoppingBag() {
     const [products, setProducts] = useState([])

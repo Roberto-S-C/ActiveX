@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import React, { useEffect } from 'react'
-import deleteProduct from '../scripts/deleteProduct'
+import deleteProduct from '../scripts/Product/deleteProduct'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router'
 

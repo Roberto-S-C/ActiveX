@@ -11,7 +11,7 @@ import Account from './Account.jsx';
 import ShoppingBag from './ShoppingBag.jsx'
 import AddProduct from './AddProduct.jsx'
 import EditProduct from './EditProduct.jsx'
-import getProducts from './scripts/getProducts.js'
+import getProducts from './scripts/Product/getProducts.js'
 
 export const ProductListContext = createContext();
 
