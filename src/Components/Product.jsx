@@ -39,6 +39,7 @@ function Product() {
             bag = [{ id, quantity: 1 }]
             localStorage.setItem('bag', JSON.stringify(bag))
         }
+        setScrollY(window.scrollY)
         setAlertDetails({ status: 'success', message: 'Product added to bag', duration: 2000 })
         setShowAlert(true)
     }
@@ -90,7 +91,7 @@ function Product() {
             </div>)
             }
 
-            {product && <div className='container mx-auto mb-3 z-0'>
+            {product && <div className='container mb-3 z-0 mx-auto'>
                 <h3 className='w-full text-3xl text-red-600 font-bold'>Reviews</h3>
                 <button
                     onClick={() => {
@@ -102,7 +103,7 @@ function Product() {
                 </button>
                 {
                     (product.reviews.length > 0) ?
-                        <div className='grid grid-cols-3 gap-4 mt-4'>
+                        <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
                             {
                                 product.reviews.map((review) => (
                                     <div key={review.id} className='flex-1 border rounded-md p-2'>
