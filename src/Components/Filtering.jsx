@@ -25,11 +25,11 @@ function Filtering() {
     useEffect(() => { getCategories().then(categories => setCategories(categories)) }, [])
 
     return (
-        <div className='flex justify-center items-center w-2/3'>
-            <div className='w-1/3 mx-2'>
+        <div className='flex justify-center items-center w-full'>
+            <div className='w-1/2 md:w-1/3 mx-2'>
                 {categories.length > 0 && <Categories categories={categories} selectCategory={selectCategory} selectedCategory={selectedCategory} />}
             </div>
-            <div className='w-2/3 mx-2'>
+            <div className='w-1/2 md:w-2/3 mx-2'>
                 {categories.length > 0 && <SearchBar selectedCategory={selectedCategory} setSearch={setSearch} />}
             </div>
         </div>
