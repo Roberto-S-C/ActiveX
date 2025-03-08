@@ -12,6 +12,8 @@ import DeleteProductConfirmation from './Components/DeleteProductConfirmation'
 import DeleteReviewConfirmation from './Components/DeleteReviewConfirmation'
 import Alert from './Components/Alert'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
+import ReviewForm from './Components/ReviewForm'
+import updateReview from './scripts/Review/updateReview'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
@@ -21,12 +23,12 @@ function Account() {
 
   const [showDeleteProductConfirmation, setShowDeleteProductConfirmation] = useState(false)
   const [showDeleteReviewConfirmation, setShowDeleteReviewConfirmation] = useState(false)
+  const [showReviewForm, setShowReviewForm] = useState(false)
 
   const [alertDetails, setAlertDetails] = useState(null)
   const [showAlert, setShowAlert] = useState(false)
 
-  const [deleteProductId, setDeleteProductId] = useState(null)
-  const [deleteReviewId, setDeleteReviewId] = useState(null)
+  const [reviewId, setReviewId] = useState(null)
 
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
 
@@ -75,12 +77,24 @@ function Account() {
 
         {showDeleteReviewConfirmation &&
           <DeleteReviewConfirmation
-            deleteReviewId={deleteReviewId}
+            reviewId={reviewId}
             reviews={reviews}
             setReviews={setReviews}
             setShowDeleteReviewConfirmation={setShowDeleteReviewConfirmation}
             setAlertDetails={setAlertDetails}
             setShowAlert={setShowAlert}
+            scrollY={scrollY}
+          />
+        }
+
+        {showReviewForm &&
+          <ReviewForm
+            setShowReviewForm={setShowReviewForm}
+            setAlertDetails={setAlertDetails}
+            setShowAlert={setShowAlert}
+            onSubmit={updateReview}
+            stateFunction={setReviews}
+            itemId={reviewId}
             scrollY={scrollY}
           />
         }
@@ -123,12 +137,16 @@ function Account() {
                       <div key={review.id} className='flex flex-col justify-between flex-1 border rounded-md p-2'>
                         <Review review={review} />
                         <div className='flex justify-around mt-2'>
-                          <button onClick={() => { }}>
+                          <button onClick={() => {
+                            setShowReviewForm(true)
+                            setReviewId(review.id)
+                            setScrollY(window.scrollY)
+                          }}>
                             <PencilSquareIcon className='w-6 h-6 text-slate-300 hover:text-red-600 hover:cursor-pointer' />
                           </button>
                           <button onClick={() => {
                             setShowDeleteReviewConfirmation(true)
-                            setDeleteReviewId(review.id)
+                            setReviewId(review.id)
                             setScrollY(window.scrollY)
                           }}>
                             <TrashIcon className='w-6 h-6 text-slate-300 hover:text-red-600 hover:cursor-pointer' />

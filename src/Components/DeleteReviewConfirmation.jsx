@@ -5,7 +5,7 @@ import deleteReview from '../scripts/Review/deleteReview'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router'
 
-function DeleteReviewConfitmarion({ deleteReviewId, reviews, setReviews, setShowDeleteReviewConfirmation, setAlertDetails, setShowAlert, scrollY }) {
+function DeleteReviewConfitmarion({ reviewId, reviews, setReviews, setShowDeleteReviewConfirmation, setAlertDetails, setShowAlert, scrollY }) {
   
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
   const navigate = useNavigate()
@@ -35,7 +35,7 @@ function DeleteReviewConfitmarion({ deleteReviewId, reviews, setReviews, setShow
             <h4 className='text-center'>This action can not be reversed.</h4>
             <button
               onClick={() => {
-                deleteReview(cookies.token, deleteReviewId, setAlertDetails, setShowAlert, reviews, setReviews)
+                deleteReview(cookies.token, reviewId, setAlertDetails, setShowAlert, reviews, setReviews)
                 setShowDeleteReviewConfirmation(false)
               }}
               className='w-3/4 p-2 mt-1 rounded-md text-lg font-bold text-white bg-slate-300 hover:bg-red-600'

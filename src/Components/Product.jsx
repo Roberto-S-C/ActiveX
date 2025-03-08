@@ -6,6 +6,7 @@ import Review from './Review'
 import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 import getProduct from '../scripts/Product/getProduct.js'
 import ReviewForm from './ReviewForm.jsx'
+import createReview from '../scripts/Review/createReview.js'
 
 function Product() {
     const [product, setProduct] = useState(null)
@@ -14,6 +15,8 @@ function Product() {
     const [showAlert, setShowAlert] = useState(false)
     const [alertDetails, setAlertDetails] = useState({ status: '', message: '', duration: 0 })
     const [showReviewForm, setShowReviewForm] = useState(false)
+
+    const [scrollY, setScrollY] = useState(0)
 
     const addToBag = () => {
         let bag = localStorage.getItem('bag')
@@ -48,18 +51,22 @@ function Product() {
 
     return (
         <div className='relative'>
-            {showReviewForm && 
-                <ReviewForm 
-                    setShowReviewForm={setShowReviewForm} 
-                    productId={id} 
-                    setAlertDetails={setAlertDetails} 
-                    setShowAlert={setShowAlert} 
-                    setProduct={setProduct} />}
+            {showReviewForm &&
+                <ReviewForm
+                    setShowReviewForm={setShowReviewForm}
+                    setAlertDetails={setAlertDetails}
+                    setShowAlert={setShowAlert}
+                    onSubmit={createReview}
+                    stateFunction={setProduct}
+                    itemId={id}
+                    scrollY={scrollY}
+                />
+            }
             {product && (<div className='lg:flex container mx-auto z-0'>
                 {showAlert && <Alert
                     alertDetails={alertDetails}
-                    showAlert={showAlert}
                     setShowAlert={setShowAlert}
+                    positionY={scrollY}
                 />}
                 <div className='lg:w-2/3' style={{ height: '60vh' }}>
                     <ProductScene model={product.file3DModel} scale={2.5} height={'100%'} background={"white"} remote={true} />
@@ -81,12 +88,15 @@ function Product() {
 
                 </div>
             </div>)
-}
+            }
 
             {product && <div className='container mx-auto mb-3 z-0'>
                 <h3 className='w-full text-3xl text-red-600 font-bold'>Reviews</h3>
                 <button
-                    onClick={() => setShowReviewForm(true)}
+                    onClick={() => {
+                        setShowReviewForm(true)
+                        setScrollY(window.scrollY)
+                    }}
                     className='flex items-center p-1 mt-3 border-2 rounded-md border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700 text-slate-400 hover:text-white'>
                     <h3 className='font-bold'>Add Review</h3>
                 </button>
