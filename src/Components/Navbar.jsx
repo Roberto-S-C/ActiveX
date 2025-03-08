@@ -31,7 +31,7 @@ function Navbar() {
                     <div className='flex justify-start w-2/3 lg:w-1/5'>
                         <a href='/products' className='flex items-center justify-center'>
                             <img src={logo} width={60} height={60} alt='logo' className='mr-2' />
-                            <h2 className='text-5xl lg:text-4xl font-bold hover:text-slate-200'>ActiveX</h2>
+                            <h2 className='text-4xl font-bold hover:text-slate-200'>ActiveX</h2>
                         </a>
                     </div>
 
