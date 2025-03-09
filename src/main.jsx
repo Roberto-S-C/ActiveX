@@ -12,6 +12,7 @@ import ShoppingBag from './ShoppingBag.jsx'
 import AddProduct from './AddProduct.jsx'
 import EditProduct from './EditProduct.jsx'
 import getProducts from './scripts/Product/getProducts.js'
+import NotFound from './NotFound.jsx'
 
 export const ProductListContext = createContext();
 
@@ -42,7 +43,7 @@ function Main() {
           </Route>
 
 
-          <Route path="*" element={<h1>404 Not Found</h1>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </ProductListContext.Provider>
