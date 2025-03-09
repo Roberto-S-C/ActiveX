@@ -17,7 +17,7 @@ function ProductsList() {
           <div className='bg-slate-200 hover:cursor-pointer'>
             <Link to={`/products/${product.id}`}>
               <h2 className='text-xl text-red-600 font-bold px-1'>{product.name}</h2>
-              <p className='font-bold px-1'>{product.price} $</p>
+              <p className='font-bold text-slate-600 px-1'>{product.price} $</p>
             </Link>
           </div>
         </div>
