@@ -32,7 +32,7 @@ function AddProduct() {
       {showAlert && <Alert alertDetails={alertDetails} setShowAlert={setShowAlert} />}
 
       {showCategoryModal &&
-        <div className='absolute top-0 left-0 w-full h-full z-10 bg-slate-200 bg-opacity-80 flex justify-center items-center'>
+        <div className='absolute flex justify-center items-center top-0 left-0 w-full h-full z-10 bg-slate-200 bg-opacity-80'>
           <AddCategory setShowCategoryModal={setShowCategoryModal} />
         </div>
       }

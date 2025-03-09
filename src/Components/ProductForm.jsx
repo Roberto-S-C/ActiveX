@@ -49,9 +49,9 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
     return (
         <form
             onSubmit={handleSubmit((data) => onSubmit(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, product, remote))}
-            className='flex items-center h-screen z-0'>
+            className='flex flex-col md:flex-row items-center h-screen z-0'>
 
-            <div className='flex justify-center items-center w-1/2 h-full'>
+            <div className='flex justify-center items-center w-11/12 md:w-1/2 h-full'>
                 {!validModel &&
                     <div>
                         <label className='flex flex-col items-center mb-2 text-2xl font-bold text-slate-400 hover:cursor-pointer hover:text-slate-600' htmlFor='model'>
@@ -70,17 +70,17 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
                 }
 
                 {validModel &&
-                    <div className='flex flex-col justify-center items-center h-full w-full'>
-                        <ProductScene model={model} scale={0.1} height={"80%"} background={'white'} remote={remote} />
+                    <div className='flex flex-col justify-around items-center h-full w-full'>
+                        <ProductScene model={model} scale={2.2} height={"80%"} background={'white'} remote={remote} />
                         <div
                             onClick={() => {
                                 setModel('')
                                 setValidModel(false)
                                 setRemote(false)
                             }}
-                            className='flex justify-center items-center w-1/2 p-4 rounded-md bg-red-600 hover:bg-red-700 hover:cursor-pointer'
+                            className='flex justify-center items-center w-4/5 md:w-2/3 lg:w-1/2 p-3 rounded-md bg-red-600 hover:bg-red-700 hover:cursor-pointer'
                         >
-                            <span className='text-xl font-bold text-white'>Remove</span>
+                            <span className='text-2xl font-bold text-white'>Remove</span>
                             <TrashIcon className='size-8 text-white' />
                         </div>
                     </div>
@@ -88,9 +88,9 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
 
             </div>
 
-            <div className='flex flex-col items-center justify-around w-1/2 h-full'>
+            <div className='flex flex-col items-center justify-around gap-5 md:gap-0 mt-10 md:mt-0 w-11/12 md:w-1/2 h-full'>
 
-                <div className='flex flex-col w-1/2'>
+                <div className='flex flex-col w-11/12 md:w-4/5 lg:w-2/3'>
                     <input
                         {...register('name', { required: 'Name is required' })}
                         name='name'
@@ -102,7 +102,7 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
                     {errors.name && <p className='text-red-600'>{errors.name.message}</p>}
                 </div>
 
-                <div className='flex flex-col w-1/2'>
+                <div className='flex flex-col w-11/12 md:w-4/5 lg:w-2/3'>
                     <label htmlFor='description' className='text-2xl font-bold text-slate-400 hover:cursor-pointer hover:text-slate-600'>Description</label>
                     <textarea
                         {...register('description', { required: 'Description is required' })}
@@ -115,7 +115,7 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
                     {errors.description && <p className='text-red-600'>{errors.description.message}</p>}
                 </div>
 
-                <div className='w-1/2'>
+                <div className='w-11/12 md:w-4/5 lg:w-2/3'>
                     {categories.length > 0 && <Categories categories={categories} selectedCategory={selectedCategory} selectCategory={selectCategory} />}
                     <div className='flex items-center hover:cursor-pointer'>
                         <PlusIcon className='size-6 text-slate-400' />
@@ -123,7 +123,7 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
                     </div>
                 </div>
 
-                <div className='flex flex-wrap justify-center w-1/2'>
+                <div className='flex flex-wrap justify-center w-11/12 md:w-4/5 lg:w-2/3'>
                     <div className='flex justify-center items-center rounded-l-md p-2 w-1/5 text-5xl bg-slate-400 hover:cursor-pointer hover:bg-red-600'>
                         <MinusIcon onClick={() => changePrice('minus', 10, price, setPrice)} className='size-10 text-white' />
                     </div>
@@ -144,7 +144,7 @@ function ProductForm({ onSubmit, showCategoryModal, setShowCategoryModal, setSho
                     {errors.price && <p className='w-full text-red-600'>{errors.price.message}</p>}
                 </div>
 
-                <input type='submit' className='w-1/2 p-4 text-2xl rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 hover:cursor-pointer' />
+                <input type='submit' className='w-11/12 md:w-4/5 lg:w-1/2 p-3 text-2xl rounded-lg font-bold text-white bg-red-600 hover:bg-red-700 hover:cursor-pointer' />
             </div>
         </form>
     )
