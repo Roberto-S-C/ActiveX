@@ -32,6 +32,8 @@ function Account() {
   const [productId, setProductId] = useState(null)
   const [reviewId, setReviewId] = useState(null)
 
+  const [isAdmin, setIsAdmin] = useState(false)
+
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
 
   const [scrollY, setScrollY] = useState(0)
@@ -44,8 +46,9 @@ function Account() {
 
     getUserProducts(cookies.token)
       .then(products => {
+        if (!products) return
+        setIsAdmin(true)
         if (products.length > 0) return setProducts(products)
-        return setProducts(null)
       })
 
     getUserReviews(cookies.token)
@@ -109,7 +112,15 @@ function Account() {
           </div>
 
           {selectedView === 'Products' &&
-            <div>
+            <div className='flex flex-col items-center mb-2'>
+              {isAdmin &&
+                  <button
+                    className=' w-1/2 md:w-1/6 p-1 my-2 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'
+                    onClick={() => navigate(`/products/add`)}
+                  >
+                    Add Product
+                  </button>
+              }
               {products
                 ? (
                   <div className='flex flex-wrap justify-center gap-3'>

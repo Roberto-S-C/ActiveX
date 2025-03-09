@@ -6,7 +6,8 @@ async function getUserProducts(token) {
         }
     })
 
-    return await response.json()
+    if (response.ok) return await response.json()
+    return null 
 }
 
 export default getUserProducts

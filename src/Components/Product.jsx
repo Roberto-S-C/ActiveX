@@ -98,8 +98,8 @@ function Product() {
                         setShowReviewForm(true)
                         setScrollY(window.scrollY)
                     }}
-                    className='flex items-center p-1 mt-3 border-2 rounded-md border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700 text-slate-400 hover:text-white'>
-                    <h3 className='font-bold'>Add Review</h3>
+                    className='p-1 mt-3 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'>
+                    Add Review
                 </button>
                 {
                     (product.reviews.length > 0) ?

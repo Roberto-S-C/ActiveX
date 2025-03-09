@@ -18,10 +18,14 @@ function ProductManagement({ product, setShowDeleteProductConfirmation, setDelet
             </div>
             <div className='flex flex-col w-full pl-1 gap-2 bg-slate-300'>
                 <div className='flex flex-col items-center gap-2'>
-                    <Link to={`/product/${product.id}`} className='underline text-red-600 hover:text-red-700'>{product.name}</Link>
-                    <h4 className='text-slate-700'>{product.price} $</h4>
+                    <Link to={`/product/${product.id}`} 
+                        className='text-xl underline text-red-600 hover:text-red-700 font-bold'
+                    >
+                        {product.name}
+                    </Link>
+                    <h4 className='text-xl text-slate-600 font-bold'>{product.price} $</h4>
                 </div>
-                <div className='flex justify-around'>
+                <div className='flex justify-around mb-1'>
                     <div onClick={() => navigate(`/products/edit/${product.id}`)}>
                         <PencilSquareIcon className='h-6 w-6 text-slate-400 hover:text-red-600 cursor-pointer' />
                     </div>
