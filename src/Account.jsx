@@ -14,6 +14,7 @@ import Alert from './Components/Alert'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 import ReviewForm from './Components/ReviewForm'
 import updateReview from './scripts/Review/updateReview'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
@@ -28,6 +29,7 @@ function Account() {
   const [alertDetails, setAlertDetails] = useState(null)
   const [showAlert, setShowAlert] = useState(false)
 
+  const [productId, setProductId] = useState(null)
   const [reviewId, setReviewId] = useState(null)
 
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
@@ -65,7 +67,7 @@ function Account() {
         <UserInfo />
         {showDeleteProductConfirmation &&
           <DeleteProductConfirmation
-            deleteProductId={deleteProductId}
+            deleteProductId={productId}
             products={products}
             setProducts={setProducts}
             setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
@@ -114,14 +116,17 @@ function Account() {
                     {products.map(product => <ProductManagement
                       key={product.id}
                       product={product}
-                      setDeleteProductId={setDeleteProductId}
+                      setDeleteProductId={setProductId}
                       setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
                       setScrollY={setScrollY}
                     />)}
                   </div>
                 )
                 : (
-                  <div>No products available...</div>
+                  <div className='flex flex-col items-center mt-8 h-full'>
+                    <ExclamationTriangleIcon className='size-16 text-red-600' />
+                    <span className='font-bold text-xl text-slate-400'>No products available...</span>
+                  </div>
                 )
               }
             </div>
@@ -132,7 +137,7 @@ function Account() {
             <div className='mb-3'>
               {reviews
                 ? (
-                  <div className='grid grid-cols-3 gap-4 mt-4'>
+                  <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
                     {reviews.map(review =>
                       <div key={review.id} className='flex flex-col justify-between flex-1 border rounded-md p-2'>
                         <Review review={review} />
@@ -157,7 +162,10 @@ function Account() {
                   </div>
                 )
                 : (
-                  <div>No reviews available...</div>
+                  <div className='flex flex-col items-center mt-8'>
+                    <ExclamationTriangleIcon className='size-16 text-red-600' />
+                    <span className='font-bold text-xl text-slate-400'>No reviews available...</span>
+                  </div>
                 )
               }
             </div>

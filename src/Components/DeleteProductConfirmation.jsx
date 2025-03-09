@@ -22,7 +22,7 @@ function DeleteProductConfirmation({ deleteProductId, products, setProducts, set
 
       <div className='relative w-full h-full'>
         <div
-          className='absolute'
+          className='absolute w-11/12 md:w-1/2 lg:w-1/3'
           style={{ top: scrollY, left: '50%', translate: ('0', '-50%') }}
         >
           <div className='relative flex flex-col justify-center items-center p-4 gap-3 rounded-lg bg-white'>

@@ -20,7 +20,7 @@ function ReviewForm({ setShowReviewForm, setAlertDetails, setShowAlert, onSubmit
             className='absolute flex flex-col w-full h-full z-10 '
             style={{ top: scrollY }}
         >
-            <div className='relative flex flex-col gap-3 w-1/2 mx-auto mt-20 p-5 bg-white border rounded-xl'>
+            <div className='relative flex flex-col gap-3 w-11/12 md:w-2/3 lg:w-1/2 mx-auto mt-20 p-2 md:p-5 bg-white border rounded-xl'>
                 <button onClick={() => setShowReviewForm(false)} className='absolute top-2 right-2'>
                     <XMarkIcon className='size-6 text-red-600 hover:cursor-pointer hover:text-red-700' />
                 </button>
@@ -55,7 +55,7 @@ function ReviewForm({ setShowReviewForm, setAlertDetails, setShowAlert, onSubmit
                         {invalidStars && <span className='text-red-600'>Please select a valid number of stars</span>}
                     </div>
 
-                    <div className='flex flex-col w-4/5'>
+                    <div className='flex flex-col w-11/12 md:w-4/5'>
                         <input
                             type='text'
                             placeholder='Title'
@@ -67,7 +67,7 @@ function ReviewForm({ setShowReviewForm, setAlertDetails, setShowAlert, onSubmit
                         {errors.title && <span className='text-start text-red-600'>This field is required</span>}
                     </div>
 
-                    <div className='flex flex-col w-4/5'>
+                    <div className='flex flex-col w-11/12 md:w-4/5'>
                         <label htmlFor='content' className='text-lg font-bold text-slate-400 hover:cursor-pointer hover:text-slate-600'>Content</label>
                         <textarea
                             id='content'
@@ -81,7 +81,7 @@ function ReviewForm({ setShowReviewForm, setAlertDetails, setShowAlert, onSubmit
                         {errors.content && errors.content.type === 'maxLength' && <span className='text-red-600'>Content cannot exceed 300 characters</span>}
                     </div>
 
-                    <button className='w-1/3 p-2 mt-2 text-xl font-bold rounded-xl bg-red-600 hover:bg-red-700 text-white'>Add Review</button>
+                    <button className='w-2/3 md:w-1/3 p-2 mt-2 text-xl font-bold rounded-xl bg-red-600 hover:bg-red-700 text-white'>Add Review</button>
                 </form>
             </div>
         </div>
