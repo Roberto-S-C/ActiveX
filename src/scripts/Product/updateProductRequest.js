@@ -1,5 +1,4 @@
 function updateProductRequest(data, model, selectedCategory, price, setShowAlert, setAlertDetails, token, navigate, product, remote) {
-    console.log(data)
 
     if (!model) {
         setAlertDetails({ status: 'error', message: 'Select a file', duration: 3000 })
