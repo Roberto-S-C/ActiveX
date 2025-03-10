@@ -36,7 +36,7 @@ function DeleteProductConfirmation({ deleteProductId, products, setProducts, set
             <button
               onClick={() => {
                 deleteProduct(cookies.token, deleteProductId, setAlertDetails, setShowAlert, products, setProducts)
-                setShowDeleteConfirmation(false)
+                setShowDeleteProductConfirmation(false)
               }}
               className='w-3/4 p-2 mt-1 rounded-md text-lg font-bold text-white bg-slate-300 hover:bg-red-600'
             >
