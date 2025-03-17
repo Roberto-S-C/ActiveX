@@ -13,6 +13,11 @@ import AddProduct from './AddProduct.jsx'
 import EditProduct from './EditProduct.jsx'
 import getProducts from './scripts/Product/getProducts.js'
 import NotFound from './NotFound.jsx'
+import Header from './Components/Header.jsx'
+import Success from './Success.jsx'
+import Cancelled from './Cancelled.jsx'
+import AddAddress from './AddAddress.jsx'
+import EditAddress from './EditAddress.jsx'
 
 export const ProductListContext = createContext();
 
@@ -42,6 +47,13 @@ function Main() {
             <Route path='edit/:id' element={<EditProduct />} />
           </Route>
 
+          <Route path='checkout' element={<Header title={'Checkout'} />}>
+            <Route path='success' element={<Success />} />
+            <Route path='canceled' element={<Cancelled />} />
+          </Route>
+
+          <Route path='address/add' element={<AddAddress />} />
+          <Route path='address/update/:id' element={<EditAddress />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

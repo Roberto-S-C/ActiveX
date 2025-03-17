@@ -10,20 +10,25 @@ import AccountTab from './Components/AccountTab'
 import ProductManagement from './Components/ProductManagement'
 import DeleteProductConfirmation from './Components/DeleteProductConfirmation'
 import DeleteReviewConfirmation from './Components/DeleteReviewConfirmation'
+import DeleteAddressConfirmation from './Components/DeleteAddressConfirmation'
 import Alert from './Components/Alert'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 import ReviewForm from './Components/ReviewForm'
 import updateReview from './scripts/Review/updateReview'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
+import getUserAddresses from './scripts/Address/getUserAddresses'
+import AddressInfo from './Components/AddressInfo'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
   const [products, setProducts] = useState(null)
+  const [addresses, setAddresses] = useState(null)
 
-  const [selectedView, setSelectedView] = useState('Products')
+  const [selectedView, setSelectedView] = useState('Addresses')
 
   const [showDeleteProductConfirmation, setShowDeleteProductConfirmation] = useState(false)
   const [showDeleteReviewConfirmation, setShowDeleteReviewConfirmation] = useState(false)
+  const [showDeleteAddressConfirmation, setShowDeleteAddressConfirmation] = useState(false)
   const [showReviewForm, setShowReviewForm] = useState(false)
 
   const [alertDetails, setAlertDetails] = useState(null)
@@ -31,6 +36,7 @@ function Account() {
 
   const [productId, setProductId] = useState(null)
   const [reviewId, setReviewId] = useState(null)
+  const [addressId, setAddressId] = useState(null)
 
   const [isAdmin, setIsAdmin] = useState(false)
 
@@ -54,7 +60,11 @@ function Account() {
     getUserReviews(cookies.token)
       .then(reviews => {
         if (reviews.length > 0) return setReviews(reviews)
-        return setReviews(null)
+      })
+
+    getUserAddresses(cookies.token)
+      .then(addresses => {
+        if (addresses.length > 0) return setAddresses(addresses)
       })
 
   }, [])
@@ -92,6 +102,18 @@ function Account() {
           />
         }
 
+        {showDeleteAddressConfirmation &&
+          <DeleteAddressConfirmation
+            addressId={addressId}
+            addresses={addresses}
+            setAddresses={setAddresses}
+            setShowDeleteAddressConfirmation={setShowDeleteAddressConfirmation}
+            setAlertDetails={setAlertDetails}
+            setShowAlert={setShowAlert}
+            scrollY={scrollY}
+          />
+        }
+
         {showReviewForm &&
           <ReviewForm
             setShowReviewForm={setShowReviewForm}
@@ -107,19 +129,53 @@ function Account() {
         <div className='mx-auto w-11/12 mt-8 z-0'>
 
           <div className='flex justify-center'>
+            <AccountTab name={'Addresses'} selectedView={selectedView} setSelectedView={setSelectedView} />
             <AccountTab name={'Products'} selectedView={selectedView} setSelectedView={setSelectedView} />
             <AccountTab name={'Reviews'} selectedView={selectedView} setSelectedView={setSelectedView} />
           </div>
 
+          {selectedView === 'Addresses' &&
+            <div className='flex flex-col items-center'>
+              <button
+                className=' w-1/2 md:w-1/6 p-1 my-2 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'
+                onClick={() => navigate(`/address/add`)}
+              >
+                Add Address
+              </button>
+              {addresses
+                ? (
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+                    {
+                      addresses.map(address =>
+                        <AddressInfo
+                          key={address.id}
+                          address={address}
+                          setAddressId={setAddressId}
+                          setShowDeleteAddressConfirmation={setShowDeleteAddressConfirmation}
+                          setScrollY={setScrollY}
+                        />)
+                    }
+                  </div>
+                )
+                : (
+                  <div className='flex flex-col items-center mt-8'>
+                    <ExclamationTriangleIcon className='size-16 text-red-600' />
+                    <span className='font-bold text-xl text-slate-400'>No addresses available...</span>
+                  </div>
+                )
+              }
+            </div>
+          }
+
           {selectedView === 'Products' &&
             <div className='flex flex-col items-center mb-2'>
               {isAdmin &&
-                  <button
-                    className=' w-1/2 md:w-1/6 p-1 my-2 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'
-                    onClick={() => navigate(`/products/add`)}
-                  >
-                    Add Product
-                  </button>
+                <button
+                  className=' w-1/2 md:w-1/6 p-1 my-2 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'
+                  onClick={() => navigate(`/products/add`)}
+                >
+                  Add Product
+                </button>
               }
               {products
                 ? (
