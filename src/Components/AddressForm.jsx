@@ -5,11 +5,12 @@ import Select from 'react-select'
 import { useCookies } from 'react-cookie'
 import { useNavigate, useParams } from 'react-router'
 
-function AddressForm({ onSubmit, setAlertDetails, setShowAlert }) {
+function AddressForm({ onSubmit, setAlertDetails, setShowAlert, address }) {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setValue
     } = useForm()
 
     const [selectedCountry, setSelectedCountry] = useState(null)
@@ -51,12 +52,22 @@ function AddressForm({ onSubmit, setAlertDetails, setShowAlert }) {
         }
     }, [selectedState])
 
+    useEffect(() => {
+        if (address) {
+            setValue('fullName', address.fullName);
+            setValue('street', address.street);
+            setValue('number', address.number);
+            setValue('phone', address.phone);
+            setValue('postalCode', address.postalCode);
+        }
+    }, [address, setValue]);
+
     return (
         <form
             onSubmit={handleSubmit(data => onSubmit(data, selectedCountry, selectedState, selectedCity, cookies.token, navigate, setAlertDetails, setShowAlert, id))}
             className='flex flex-col md:justify-around items-center w-full h-full'
         >
-                        <div className='flex flex-col w-11/12 md:w-4/5 lg:w-3/5 mt-4 md:mt-0'>
+            <div className='flex flex-col w-11/12 md:w-4/5 lg:w-3/5 mt-4 md:mt-0'>
                 <input
                     type="text"
                     placeholder="Full Name"

@@ -135,7 +135,7 @@ function Account() {
           </div>
 
           {selectedView === 'Addresses' &&
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center mb-3'>
               <button
                 className=' w-1/2 md:w-1/6 p-1 my-2 border-2 rounded-md text-slate-400  hover:text-white font-bold border-slate-300 bg-slate-100 hover:bg-red-600 hover:border-red-700'
                 onClick={() => navigate(`/address/add`)}
