@@ -18,18 +18,24 @@ import updateReview from './scripts/Review/updateReview'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import getUserAddresses from './scripts/Address/getUserAddresses'
 import AddressInfo from './Components/AddressInfo'
+import getUserOrders from './scripts/User/getUserOrders'
+import OrderInfo from './Components/OrderInfo'
+import OrderDetails from './Components/OrderDetails'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
   const [products, setProducts] = useState(null)
   const [addresses, setAddresses] = useState(null)
+  const [orders, setOrders] = useState(null)
 
-  const [selectedView, setSelectedView] = useState('Addresses')
+  const [selectedView, setSelectedView] = useState('Orders')
 
   const [showDeleteProductConfirmation, setShowDeleteProductConfirmation] = useState(false)
   const [showDeleteReviewConfirmation, setShowDeleteReviewConfirmation] = useState(false)
   const [showDeleteAddressConfirmation, setShowDeleteAddressConfirmation] = useState(false)
   const [showReviewForm, setShowReviewForm] = useState(false)
+  const [showOrderDetails, setShowOrderDetails] = useState(false)
+  const [orderId, setOrderId] = useState(null)
 
   const [alertDetails, setAlertDetails] = useState(null)
   const [showAlert, setShowAlert] = useState(false)
@@ -52,7 +58,7 @@ function Account() {
 
     getUserProducts(cookies.token)
       .then(products => {
-        if (!products) return
+        if(products === 'Forbidden') return
         setIsAdmin(true)
         if (products.length > 0) return setProducts(products)
       })
@@ -65,6 +71,11 @@ function Account() {
     getUserAddresses(cookies.token)
       .then(addresses => {
         if (addresses.length > 0) return setAddresses(addresses)
+      })
+
+    getUserOrders(cookies.token)
+      .then(orders => {
+        if (orders.length > 0) return setOrders(orders)
       })
 
   }, [])
@@ -126,13 +137,61 @@ function Account() {
           />
         }
 
+        {
+          showOrderDetails &&
+          <OrderDetails
+            orderId={orderId}
+            setShowOrderDetails={setShowOrderDetails}
+            scrollY={scrollY}
+          />
+        }
+
         <div className='mx-auto w-11/12 mt-8 z-0'>
 
           <div className='flex justify-center'>
+            <AccountTab name={'Orders'} selectedView={selectedView} setSelectedView={setSelectedView} />
             <AccountTab name={'Addresses'} selectedView={selectedView} setSelectedView={setSelectedView} />
-            <AccountTab name={'Products'} selectedView={selectedView} setSelectedView={setSelectedView} />
+            {
+              isAdmin && <AccountTab name={'Products'} selectedView={selectedView} setSelectedView={setSelectedView} />
+            }
             <AccountTab name={'Reviews'} selectedView={selectedView} setSelectedView={setSelectedView} />
           </div>
+
+          {selectedView === 'Orders' &&
+            <div className='mt-3'>
+              {
+                (orders)
+                  ? (
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3'>
+                      {orders.map(order => {
+                        return (
+                          <div key={order.id} className='flex flex-col items-center border rounded-md p-2 my-2'>
+                            <OrderInfo order={order} />
+                            <span
+                              onClick={() => {
+                                setOrderId(order.id)
+                                setShowOrderDetails(true)
+                                setScrollY(window.scrollY)
+                              }}
+                              className='text-red-600 underline'
+                            >
+                              See details...
+                            </span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )
+                  : (
+                    <div className='flex flex-col items-center mt-8'>
+                      <ExclamationTriangleIcon className='size-16 text-red-600' />
+                      <span className='font-bold text-xl text-slate-400'>No orders available...</span>
+                    </div>
+                  )
+              }
+            </div>
+
+          }
 
           {selectedView === 'Addresses' &&
             <div className='flex flex-col items-center mb-3'>

@@ -13,7 +13,7 @@ function AddressInfo({ address, setShowDeleteAddressConfirmation, setAddressId, 
                 <span className='text-slate-500'>City: {address.city}, {address.state}</span>
                 <span className='text-slate-500'>Country: {address.country}</span>
                 <span className='text-slate-500'>Zip Code: {address.postalCode}</span>
-                <span className='text-slate-500'>Contact: {address.phone}</span>
+                <span className=' text-slate-500'>Contact: {address.phone}</span>
             </div>
             <div className='flex justify-around mt-2'>
                 <button onClick={() => navigate(`/address/update/${address.id}`)}>

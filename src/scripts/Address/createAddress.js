@@ -1,4 +1,4 @@
-async function createAddress(data, selectedCountry, selectedState, selectedCity, token, navigate, setAlertDetails, setShowAlert) {
+async function createAddress(data, selectedCountry, selectedState, selectedCity, token, navigate, setAlertDetails, setShowAlert, setShowAddressForm) {
     let address = {
         fullName: data.fullName,
         street: data.street,
@@ -18,11 +18,14 @@ async function createAddress(data, selectedCountry, selectedState, selectedCity,
         body: JSON.stringify(address)
     })
     if (response.ok) {
-        setAlertDetails({status: 'success', message: 'Address created successfully', duration: 3000})
+        let data = await response.json()
+        localStorage.setItem('shippingAddressId', JSON.stringify(data.id))
+        setAlertDetails({ status: 'success', message: 'Address created successfully', duration: 3000 })
         setShowAlert(true)
+        if (setShowAddressForm) return setShowAddressForm(false)
         return setTimeout(() => navigate('/account'), 1200)
     }
-    setAlertDetails({status: 'error', message: 'Address could not be created', duration: 3000})
+    setAlertDetails({ status: 'error', message: 'Address could not be created', duration: 3000 })
     setShowAlert(true)
 }
 

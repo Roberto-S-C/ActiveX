@@ -1,4 +1,4 @@
-async function updateAddress(data, selectedCountry, selectedState, selectedCity, token, navigate, setAlertDetails, setShowAlert, addressId) {
+async function updateAddress(data, selectedCountry, selectedState, selectedCity, token, navigate, setAlertDetails, setShowAlert, setShowAddressForm, addressId) {
     let address = {
         fullName: data.fullName,
         street: data.street,

@@ -6,9 +6,11 @@ async function getUserAddresses(token) {
             Authorization: `Bearer ${token}`
         }    
     })
-
+    if (!response.ok) {
+        return null
+    }
     const addresses = await response.json()
-    return addresses
+    return  addresses 
 }
 
 export default getUserAddresses
