@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Components/Header'
 import ProductScene from './Components/ProductScene'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { MinusCircleIcon, PlusCircleIcon, ShoppingBagIcon, TrashIcon } from '@heroicons/react/24/solid'
 import getProduct from './scripts/Product/getProduct'
+import { useCookies } from 'react-cookie'
+import CheckoutAddress from './Components/CheckoutAddress'
+import Alert from './Components/Alert'
 
 function ShoppingBag() {
     const [products, setProducts] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
+    const [showCheckoutAddress, setShowCheckoutAddress] = useState(false)
+
+    const [alertDetails, setAlertDetails] = useState({})
+    const [showAlert, setShowAlert] = useState(false)
+    const [positionY, setPositionY] = useState(null)
 
     const calculateTotalPrice = () => {
         let total = 0
         products.forEach(product => {
             total += product.price * product.quantity
         })
-        setTotalPrice(total)
+        setTotalPrice(Math.round(total * 100) / 100)
     }
 
     const setItemQuantity = (id, operand) => {
@@ -56,8 +64,10 @@ function ShoppingBag() {
     useEffect(() => calculateTotalPrice(), [products])
 
     return (
-        <div>
+        <div className='relative z-0'>
             <Header title='Shopping Bag' />
+            {showAlert && <Alert alertDetails={alertDetails} setShowAlert={setShowAlert} positionY={positionY} />}
+            {showCheckoutAddress && <CheckoutAddress products={products} setShowCheckoutAddress={setShowCheckoutAddress} />}
             <div className='flex flex-col lg:flex-row container mx-auto h-screen'>
                 <div className='lg:w-2/3 lg:mx-3'>
                     <h3 className='mt-3 text-center lg:text-left text-red-600 font-bold text-3xl'>Products</h3>
@@ -103,7 +113,24 @@ function ShoppingBag() {
                             <span className='text-xl font-bold'>Total</span>
                             <span className='text-xl font-bold'>{totalPrice} $</span>
                         </div>
-                        <button className='w-1/2 md:w-1/3 lg:w-2/3  mt-5 text-2xl bg-red-600 text-white p-3 mb-2 rounded-lg hover:bg-red-700 font-bold'>Checkout</button>
+                        <button
+                            onClick={() => {
+                                if (products.length === 0) {
+                                    setAlertDetails({
+                                        status: 'error',
+                                        message: 'Your bag is empty.',
+                                        duration: 1000
+                                    })
+                                    setShowAlert(true)
+                                    setPositionY(window.scrollY + 10)
+                                    return
+                                }
+                                setShowCheckoutAddress(true)
+                            }}
+                            className='w-1/2 md:w-1/3 lg:w-2/3  mt-5 text-2xl bg-red-600 text-white p-3 mb-2 rounded-lg hover:bg-red-700 font-bold'
+                        >
+                            Checkout
+                        </button>
                     </div>
                 </div>
             </div>
