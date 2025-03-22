@@ -7,6 +7,7 @@ async function getUserProducts(token) {
     })
 
     if (response.ok) return await response.json()
+    if(response.status === 403) return 'Forbidden' 
     return null 
 }
 
