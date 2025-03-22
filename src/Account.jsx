@@ -28,6 +28,11 @@ function Account() {
   const [addresses, setAddresses] = useState(null)
   const [orders, setOrders] = useState(null)
 
+  const [loadingProducts, setLoadingProducts] = useState(true)
+  const [loadingReviews, setLoadingReviews] = useState(true)
+  const [loadingAddresses, setLoadingAddresses] = useState(true)
+  const [loadingOrders, setLoadingOrders] = useState(true)
+
   const [selectedView, setSelectedView] = useState('Orders')
 
   const [showDeleteProductConfirmation, setShowDeleteProductConfirmation] = useState(false)
@@ -56,29 +61,33 @@ function Account() {
       return navigate('/signin')
     }
 
-    getUserProducts(cookies.token)
+        getUserProducts(cookies.token)
       .then(products => {
-        if(products === 'Forbidden') return
+        if (products === 'Forbidden') return
         setIsAdmin(true)
-        if (products.length > 0) return setProducts(products)
+        if (products.length > 0) setProducts(products)
       })
+      .finally(() => setLoadingProducts(false))
 
-    getUserReviews(cookies.token)
+        getUserReviews(cookies.token)
       .then(reviews => {
-        if (reviews.length > 0) return setReviews(reviews)
+        if (reviews.length > 0) setReviews(reviews)
       })
+      .finally(() => setLoadingReviews(false))
 
-    getUserAddresses(cookies.token)
+        getUserAddresses(cookies.token)
       .then(addresses => {
-        if (addresses.length > 0) return setAddresses(addresses)
+        if (addresses.length > 0) setAddresses(addresses)
       })
+      .finally(() => setLoadingAddresses(false))
 
-    getUserOrders(cookies.token)
+        getUserOrders(cookies.token)
       .then(orders => {
-        if (orders.length > 0) return setOrders(orders)
+        if (orders.length > 0) setOrders(orders)
       })
+      .finally(() => setLoadingOrders(false))
 
-  }, [])
+  }, [cookies.token, navigate])
 
   return (
     <div>
@@ -159,38 +168,37 @@ function Account() {
 
           {selectedView === 'Orders' &&
             <div className='mt-3'>
-              {
-                (orders)
-                  ? (
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3'>
-                      {orders.map(order => {
-                        return (
-                          <div key={order.id} className='flex flex-col items-center border rounded-md p-2 my-2'>
-                            <OrderInfo order={order} />
-                            <span
-                              onClick={() => {
-                                setOrderId(order.id)
-                                setShowOrderDetails(true)
-                                setScrollY(window.scrollY)
-                              }}
-                              className='text-red-600 underline'
-                            >
-                              See details...
-                            </span>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )
-                  : (
-                    <div className='flex flex-col items-center mt-8'>
-                      <ExclamationTriangleIcon className='size-16 text-red-600' />
-                      <span className='font-bold text-xl text-slate-400'>No orders available...</span>
-                    </div>
-                  )
-              }
+              {loadingOrders ? (
+                <div className='flex justify-center items-center'>
+                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                </div>
+              ) : (
+                orders ? (
+                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3'>
+                    {orders.map(order => (
+                      <div key={order.id} className='flex flex-col items-center border rounded-md p-2 my-2'>
+                        <OrderInfo order={order} />
+                        <span
+                          onClick={() => {
+                            setOrderId(order.id)
+                            setShowOrderDetails(true)
+                            setScrollY(window.scrollY)
+                          }}
+                          className='text-red-600 underline'
+                        >
+                          See details...
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className='flex flex-col items-center mt-8'>
+                    <ExclamationTriangleIcon className='size-16 text-red-600' />
+                    <span className='font-bold text-xl text-slate-400'>No orders available...</span>
+                  </div>
+                )
+              )}
             </div>
-
           }
 
           {selectedView === 'Addresses' &&
@@ -201,28 +209,30 @@ function Account() {
               >
                 Add Address
               </button>
-              {addresses
-                ? (
+              {loadingAddresses ? (
+                <div className='flex justify-center items-center'>
+                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                </div>
+              ) : (
+                addresses ? (
                   <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
-                    {
-                      addresses.map(address =>
-                        <AddressInfo
-                          key={address.id}
-                          address={address}
-                          setAddressId={setAddressId}
-                          setShowDeleteAddressConfirmation={setShowDeleteAddressConfirmation}
-                          setScrollY={setScrollY}
-                        />)
-                    }
+                    {addresses.map(address => (
+                      <AddressInfo
+                        key={address.id}
+                        address={address}
+                        setAddressId={setAddressId}
+                        setShowDeleteAddressConfirmation={setShowDeleteAddressConfirmation}
+                        setScrollY={setScrollY}
+                      />
+                    ))}
                   </div>
-                )
-                : (
+                ) : (
                   <div className='flex flex-col items-center mt-8'>
                     <ExclamationTriangleIcon className='size-16 text-red-600' />
                     <span className='font-bold text-xl text-slate-400'>No addresses available...</span>
                   </div>
                 )
-              }
+              )}
             </div>
           }
 
@@ -236,35 +246,43 @@ function Account() {
                   Add Product
                 </button>
               }
-              {products
-                ? (
+              {loadingProducts ? (
+                <div className='flex justify-center items-center'>
+                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                </div>
+              ) : (
+                products ? (
                   <div className='flex flex-wrap justify-center gap-3'>
-                    {products.map(product => <ProductManagement
-                      key={product.id}
-                      product={product}
-                      setDeleteProductId={setProductId}
-                      setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
-                      setScrollY={setScrollY}
-                    />)}
+                    {products.map(product => (
+                      <ProductManagement
+                        key={product.id}
+                        product={product}
+                        setDeleteProductId={setProductId}
+                        setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
+                        setScrollY={setScrollY}
+                      />
+                    ))}
                   </div>
-                )
-                : (
+                ) : (
                   <div className='flex flex-col items-center mt-8 h-full'>
                     <ExclamationTriangleIcon className='size-16 text-red-600' />
                     <span className='font-bold text-xl text-slate-400'>No products available...</span>
                   </div>
                 )
-              }
+              )}
             </div>
-
           }
 
           {selectedView === 'Reviews' &&
             <div className='mb-3'>
-              {reviews
-                ? (
+              {loadingReviews ? (
+                <div className='flex justify-center items-center'>
+                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                </div>
+              ) : (
+                reviews ? (
                   <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
-                    {reviews.map(review =>
+                    {reviews.map(review => (
                       <div key={review.id} className='flex flex-col justify-between flex-1 border rounded-md p-2'>
                         <Review review={review} />
                         <div className='flex justify-around mt-2'>
@@ -284,16 +302,15 @@ function Account() {
                           </button>
                         </div>
                       </div>
-                    )}
+                    ))}
                   </div>
-                )
-                : (
+                ) : (
                   <div className='flex flex-col items-center mt-8'>
                     <ExclamationTriangleIcon className='size-16 text-red-600' />
-                    <span className='font-bold text-xl text-slate-400'>No reviews available...</span>
+                    <span className='font-bold text-xl Text-slate-400'>No reviews available...</span>
                   </div>
                 )
-              }
+              )}
             </div>
           }
 
