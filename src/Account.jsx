@@ -22,6 +22,7 @@ import getUserOrders from './scripts/User/getUserOrders'
 import OrderInfo from './Components/OrderInfo'
 import OrderDetails from './Components/OrderDetails'
 import Pagination from './Components/Pagination'
+import UserProductsFiltering from './Components/UserProductsFiltering'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
@@ -259,16 +260,19 @@ function Account() {
                 </div>
               ) : (
                 userProducts ? (
-                  <div className='flex flex-wrap justify-center gap-3'>
-                    {userProducts.products.map(product => (
-                      <ProductManagement
-                        key={product.id}
-                        product={product}
-                        setDeleteProductId={setProductId}
-                        setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
-                        setScrollY={setScrollY}
-                      />
-                    ))}
+                  <div className='flex flex-col justify-center gap-3'>
+                    <UserProductsFiltering setUserProducts={setUserProducts} />
+                    <div className='flex flex-wrap justify-center gap-3'>
+                      {userProducts.products.map(product => (
+                        <ProductManagement
+                          key={product.id}
+                          product={product}
+                          setDeleteProductId={setProductId}
+                          setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
+                          setScrollY={setScrollY}
+                        />
+                      ))}
+                    </div>
                     <Pagination paginationInfo={userProducts.pagination} onPageChange={onPageChange} />
                   </div>
                 ) : (
