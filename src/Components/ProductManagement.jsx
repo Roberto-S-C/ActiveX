@@ -18,7 +18,7 @@ function ProductManagement({ product, setShowDeleteProductConfirmation, setDelet
             </div>
             <div className='flex flex-col w-full pl-1 gap-2 bg-slate-300'>
                 <div className='flex flex-col items-center gap-2'>
-                    <Link to={`/product/${product.id}`} 
+                    <Link to={`/products/${product.id}`} 
                         className='text-xl underline text-red-600 hover:text-red-700 font-bold'
                     >
                         {product.name}

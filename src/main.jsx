@@ -26,7 +26,9 @@ function Main() {
 
   useEffect(() => {
     getProducts()
-      .then(data => setProductList(data))
+      .then(data => {
+        setProductList(data)
+      })
   }, [])
 
   return (

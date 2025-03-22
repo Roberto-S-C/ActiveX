@@ -1,5 +1,5 @@
-async function getUserProducts(token) {
-    let response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/products`, {
+async function getUserProducts(token, pageNumber = 1, pageSize = 6) {
+    let response = await fetch(`${import.meta.env.VITE_API_URL}/api/user/products?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`

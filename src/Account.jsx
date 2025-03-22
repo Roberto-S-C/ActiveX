@@ -21,10 +21,11 @@ import AddressInfo from './Components/AddressInfo'
 import getUserOrders from './scripts/User/getUserOrders'
 import OrderInfo from './Components/OrderInfo'
 import OrderDetails from './Components/OrderDetails'
+import Pagination from './Components/Pagination'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
-  const [products, setProducts] = useState(null)
+  const [userProducts, setUserProducts] = useState(null)
   const [addresses, setAddresses] = useState(null)
   const [orders, setOrders] = useState(null)
 
@@ -55,33 +56,39 @@ function Account() {
 
   const [scrollY, setScrollY] = useState(0)
 
+  const onPageChange = async (selectedPage) => {
+    let pageSize = 6
+    const data = await getUserProducts(cookies.token, selectedPage, pageSize)
+    setUserProducts(data)
+  }
+
   const navigate = useNavigate()
   useEffect(() => {
     if (!cookies.token) {
       return navigate('/signin')
     }
 
-        getUserProducts(cookies.token)
-      .then(products => {
-        if (products === 'Forbidden') return
+    getUserProducts(cookies.token)
+      .then(data => {
+        if (data === 'Forbidden') return
         setIsAdmin(true)
-        if (products.length > 0) setProducts(products)
+        if (data.products.length > 0) setUserProducts(data)
       })
       .finally(() => setLoadingProducts(false))
 
-        getUserReviews(cookies.token)
+    getUserReviews(cookies.token)
       .then(reviews => {
         if (reviews.length > 0) setReviews(reviews)
       })
       .finally(() => setLoadingReviews(false))
 
-        getUserAddresses(cookies.token)
+    getUserAddresses(cookies.token)
       .then(addresses => {
         if (addresses.length > 0) setAddresses(addresses)
       })
       .finally(() => setLoadingAddresses(false))
 
-        getUserOrders(cookies.token)
+    getUserOrders(cookies.token)
       .then(orders => {
         if (orders.length > 0) setOrders(orders)
       })
@@ -251,9 +258,9 @@ function Account() {
                   <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
                 </div>
               ) : (
-                products ? (
+                userProducts ? (
                   <div className='flex flex-wrap justify-center gap-3'>
-                    {products.map(product => (
+                    {userProducts.products.map(product => (
                       <ProductManagement
                         key={product.id}
                         product={product}
@@ -262,6 +269,7 @@ function Account() {
                         setScrollY={setScrollY}
                       />
                     ))}
+                    <Pagination paginationInfo={userProducts.pagination} onPageChange={onPageChange} />
                   </div>
                 ) : (
                   <div className='flex flex-col items-center mt-8 h-full'>
