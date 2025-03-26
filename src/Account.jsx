@@ -109,8 +109,8 @@ function Account() {
         {showDeleteProductConfirmation &&
           <DeleteProductConfirmation
             deleteProductId={productId}
-            products={products}
-            setProducts={setProducts}
+            products={userProducts}
+            setProducts={setUserProducts}
             setShowDeleteProductConfirmation={setShowDeleteProductConfirmation}
             setAlertDetails={setAlertDetails}
             setShowAlert={setShowAlert}
@@ -192,7 +192,7 @@ function Account() {
                             setShowOrderDetails(true)
                             setScrollY(window.scrollY)
                           }}
-                          className='text-red-600 underline'
+                          className='text-red-600 underline hover:cursor-pointer'
                         >
                           See details...
                         </span>
