@@ -17,7 +17,7 @@ function DeleteAddressConfirmation({ addressId, addresses, setAddresses, setShow
 
   return (
     <div
-      className='flex justify-center items-center absolute z-10 w-full h-full bg-slate-100 bg-opacity-80'>
+      className='flex justify-center items-center absolute z-10 w-full h-screen bg-slate-100 bg-opacity-80'>
 
       <div className='relative w-full h-full'>
         <div
