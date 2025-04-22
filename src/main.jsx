@@ -1,6 +1,6 @@
 import { StrictMode, createContext, useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from "react-router"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router"
 import './Styles/index.css'
 import App from './App.jsx'
 import Navbar from './Components/Navbar.jsx'
@@ -39,6 +39,7 @@ function Main() {
           <Route path="signin" element={<SignIn />} />
           <Route path="account" element={<Account />} />
           <Route path="shoppingbag" element={<ShoppingBag />} />
+          <Route path='/' element={<Navigate to={"/products"} replace />} />
 
           <Route path='products'>
             <Route element={<Navbar />} >
