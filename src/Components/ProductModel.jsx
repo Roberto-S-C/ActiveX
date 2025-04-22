@@ -16,7 +16,7 @@ function ProductModel({ model, scale, remote }) {
     }, [model, remote]);
 
     let glb
-    if (remote) { glb = useLoader(GLTFLoader, `${import.meta.env.VITE_API_URL}/${model}`) }
+    if (remote) { glb = useLoader(GLTFLoader, model) }
     if (!remote && fileUrl) { glb = useLoader(GLTFLoader, fileUrl) }
 
     useEffect(() => {
