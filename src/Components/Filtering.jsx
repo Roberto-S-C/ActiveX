@@ -5,7 +5,7 @@ import { ProductListContext } from '../main'
 import { useNavigate } from 'react-router'
 import getCategories from '../scripts/Category/getCategories'
 
-function Filtering() {
+function Filtering({ setLoadingProducts }) {
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState(0)
 
@@ -15,14 +15,29 @@ function Filtering() {
     const navigate = useNavigate()
 
     const selectCategory = async (category) => {
+        setLoadingProducts(true)
         setSelectedCategory(category.value)
-        let response = await fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
-        let data = await response.json()
-        setProductList(data)
+        fetch(`${import.meta.env.VITE_API_URL}/api/products?name=${search}&category=${category.value}`)
+            .then(response => response.json())
+            .then(data => {
+                setProductList(data)
+                setLoadingProducts(false)
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error)
+                setLoadingProducts(false)
+            })
         navigate('/products')
     }
 
-    useEffect(() => { getCategories().then(categories => setCategories(categories)) }, [])
+    useEffect(() => { 
+        setLoadingProducts(true)
+        getCategories()
+            .then(categories => {
+                setCategories(categories)
+                setLoadingProducts(false)
+            }) 
+    }, [])
 
     return (
         <div className='flex justify-center items-center w-full'>

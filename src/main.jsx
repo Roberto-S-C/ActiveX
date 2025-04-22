@@ -23,11 +23,13 @@ export const ProductListContext = createContext();
 
 function Main() {
   const [productList, setProductList] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     getProducts()
       .then(data => {
         setProductList(data)
+        setLoadingProducts(false)
       })
   }, [])
 
@@ -42,8 +44,8 @@ function Main() {
           <Route path='/' element={<Navigate to={"/products"} replace />} />
 
           <Route path='products'>
-            <Route element={<Navbar />} >
-              <Route index element={<App />} />
+            <Route element={<Navbar setLoadingProducts={setLoadingProducts} />} >
+              <Route index element={<App loadingProducts={loadingProducts} setLoadingProducts={setLoadingProducts} />} />
               <Route path=':id' element={<ProductRoute />} />
             </Route>
             <Route path='add' element={<AddProduct />} />

@@ -6,15 +6,19 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import Pagination from './Pagination'
 import getProducts from '../scripts/Product/getProducts'
 
-function ProductsList() {
+function ProductsList({ setLoadingProducts }) {
   const { productList, setProductList } = useContext(ProductListContext)
 
   const onPageChange = async (selectedPage) => {
+    setLoadingProducts(true)
     let productName = ''
     let category = 0
     let pageSize = 6
-    const data = await getProducts(productName, category, selectedPage, pageSize)
-    setProductList(data)
+    getProducts(productName, category, selectedPage, pageSize)
+      .then(data => {
+        setProductList(data)
+        setLoadingProducts(false)
+      })
   }
 
   return (

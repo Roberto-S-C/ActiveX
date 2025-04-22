@@ -6,12 +6,13 @@ import { MinusCircleIcon, PlusCircleIcon, ShoppingBagIcon, TrashIcon } from '@he
 import getProduct from './scripts/Product/getProduct'
 import CheckoutAddress from './Components/CheckoutAddress'
 import Alert from './Components/Alert'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 function ShoppingBag() {
     const [products, setProducts] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [showCheckoutAddress, setShowCheckoutAddress] = useState(false)
-    const [loading, setLoading] = useState(true) // Add loading state
+    const [loading, setLoading] = useState(true)
 
     const [alertDetails, setAlertDetails] = useState({})
     const [showAlert, setShowAlert] = useState(false)
@@ -58,7 +59,7 @@ function ShoppingBag() {
                                 setProducts(prevProducts => prevProducts.filter(product => product.id !== item.id))
                             })
                     )
-                ).finally(() => setLoading(false)) // Set loading to false after all requests are completed
+                ).finally(() => setLoading(false))
             } else {
                 setLoading(false)
             }
@@ -75,9 +76,8 @@ function ShoppingBag() {
             {showAlert && <Alert alertDetails={alertDetails} setShowAlert={setShowAlert} positionY={positionY} />}
             {showCheckoutAddress && <CheckoutAddress products={products} setShowCheckoutAddress={setShowCheckoutAddress} />}
             {loading ? (
-                // Show spinner while loading
                 <div className='flex justify-center items-center h-screen'>
-                    <div className='spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full border-red-600'></div>
+                    <BeatLoader color="#dc2626" size={15} />
                 </div>
             ) : (
                 <div className='flex flex-col lg:flex-row container mx-auto h-screen'>

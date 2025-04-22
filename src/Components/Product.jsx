@@ -7,6 +7,7 @@ import { ShoppingBagIcon } from '@heroicons/react/20/solid'
 import getProduct from '../scripts/Product/getProduct.js'
 import ReviewForm from './ReviewForm.jsx'
 import createReview from '../scripts/Review/createReview.js'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 function Product() {
     const [product, setProduct] = useState(null)
@@ -56,9 +57,8 @@ function Product() {
     return (
         <div className='relative'>
             {loading ? (
-                // Show spinner while loading
                 <div className='flex justify-center items-center h-screen'>
-                    <div className='spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full border-red-600'></div>
+                    <BeatLoader color="#dc2626" size={15} />
                 </div>
             ) : (
                 <>

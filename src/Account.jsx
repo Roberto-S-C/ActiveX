@@ -23,6 +23,7 @@ import OrderInfo from './Components/OrderInfo'
 import OrderDetails from './Components/OrderDetails'
 import Pagination from './Components/Pagination'
 import UserProductsFiltering from './Components/UserProductsFiltering'
+import BeatLoader from 'react-spinners/BeatLoader'
 
 function Account() {
   const [reviews, setReviews] = useState(null)
@@ -178,7 +179,7 @@ function Account() {
             <div className='mt-3'>
               {loadingOrders ? (
                 <div className='flex justify-center items-center'>
-                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                  <BeatLoader color="#dc2626" size={15} />
                 </div>
               ) : (
                 orders ? (
@@ -219,7 +220,7 @@ function Account() {
               </button>
               {loadingAddresses ? (
                 <div className='flex justify-center items-center'>
-                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                  <BeatLoader color="#dc2626" size={15} />
                 </div>
               ) : (
                 addresses ? (
@@ -256,7 +257,7 @@ function Account() {
               }
               {loadingProducts ? (
                 <div className='flex justify-center items-center'>
-                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                  <BeatLoader color="#dc2626" size={15} />
                 </div>
               ) : (
                 userProducts ? (
@@ -289,7 +290,7 @@ function Account() {
             <div className='mb-3'>
               {loadingReviews ? (
                 <div className='flex justify-center items-center'>
-                  <div className='spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-red-600'></div>
+                  <BeatLoader color="#dc2626" size={15} />
                 </div>
               ) : (
                 reviews ? (

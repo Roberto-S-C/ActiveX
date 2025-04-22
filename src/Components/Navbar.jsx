@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import logo from '../assets/logo.png'
 import { Link, Outlet } from 'react-router'
 import Filtering from './Filtering'
 import { useCookies } from 'react-cookie'
 
-function Navbar() {
+function Navbar({ setLoadingProducts }) {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -36,7 +36,7 @@ function Navbar() {
                     </div>
 
                     <div className='hidden lg:flex justify-center items-center lg:w-3/5'>
-                        <Filtering />
+                        <Filtering setLoadingProducts={setLoadingProducts} />
                     </div>
 
                     <div className='flex justify-center w-1/3 lg:w-1/5'>
@@ -53,7 +53,7 @@ function Navbar() {
                 </div>
 
                 <div className='lg:hidden flex justify-center items-center mt-2 mx-auto'>
-                    <Filtering />
+                    <Filtering setLoadingProducts={setLoadingProducts} />
                 </div>
             </div>
             <Outlet />
